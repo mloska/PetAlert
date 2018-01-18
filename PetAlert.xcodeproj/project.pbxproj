@@ -7,23 +7,51 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2631C6EA57944084F1329E5C /* Pods_PetAlert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539AF1AC130230966429BFAD /* Pods_PetAlert.framework */; };
+		4903E6F7200A40710018C008 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4903E6F6200A40710018C008 /* CoreDataHelper.swift */; };
+		4913E5B52003FA1900C34C8A /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4913E5B42003FA1900C34C8A /* CustomTableViewCell.swift */; };
+		49328249200A1AB500B6C860 /* PetAlert.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 49328247200A1AB500B6C860 /* PetAlert.xcdatamodeld */; };
 		494A23582001313B00967826 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A23572001313B00967826 /* AppDelegate.swift */; };
-		494A235A2001313B00967826 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A23592001313B00967826 /* FirstViewController.swift */; };
-		494A235C2001313B00967826 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A235B2001313B00967826 /* SecondViewController.swift */; };
-		494A235F2001313B00967826 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 494A235D2001313B00967826 /* Main.storyboard */; };
+		494A235A2001313B00967826 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A23592001313B00967826 /* LoginViewController.swift */; };
+		494A235C2001313B00967826 /* TicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A235B2001313B00967826 /* TicketsViewController.swift */; };
 		494A23612001313B00967826 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 494A23602001313B00967826 /* Assets.xcassets */; };
-		494A23642001313B00967826 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 494A23622001313B00967826 /* LaunchScreen.storyboard */; };
+		494A23642001313B00967826 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 494A23622001313B00967826 /* Main.storyboard */; };
+		494A236C2001318F00967826 /* PetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A236B2001318F00967826 /* PetModel.swift */; };
+		494A239A200206F300967826 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A2399200206F300967826 /* MapViewController.swift */; };
+		494A239C200227AF00967826 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A239B200227AF00967826 /* MainTabController.swift */; };
+		494A239E2002316B00967826 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A239D2002316B00967826 /* PhotosViewController.swift */; };
+		494A23A0200231B300967826 /* AddTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A239F200231B300967826 /* AddTicketViewController.swift */; };
+		494A23A22002320800967826 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A23A12002320800967826 /* ProfileViewController.swift */; };
+		49C2CA0F20052D9B0071B894 /* DetailsTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2CA0E20052D9A0071B894 /* DetailsTicketViewController.swift */; };
+		49C2CA1120054F590071B894 /* podfile in Resources */ = {isa = PBXBuildFile; fileRef = 49C2CA1020054F590071B894 /* podfile */; };
+		49C68B3D200BEE1E00482C32 /* PetObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C68B3C200BEE1E00482C32 /* PetObject.swift */; };
+		49D236E220069DA4007801A0 /* CreateNewTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D236E120069DA4007801A0 /* CreateNewTicketViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3E18F86B55E860B4BD8D6E98 /* Pods-PetAlert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetAlert.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PetAlert/Pods-PetAlert.debug.xcconfig"; sourceTree = "<group>"; };
+		4903E6F6200A40710018C008 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
+		4913E5B42003FA1900C34C8A /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		49328248200A1AB500B6C860 /* PetAlert.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PetAlert.xcdatamodel; sourceTree = "<group>"; };
 		494A23542001313B00967826 /* PetAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		494A23572001313B00967826 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		494A23592001313B00967826 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		494A235B2001313B00967826 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
-		494A235E2001313B00967826 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		494A23592001313B00967826 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		494A235B2001313B00967826 /* TicketsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketsViewController.swift; sourceTree = "<group>"; };
 		494A23602001313B00967826 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		494A23632001313B00967826 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		494A23632001313B00967826 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		494A23652001313B00967826 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		494A236B2001318F00967826 /* PetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetModel.swift; sourceTree = "<group>"; };
+		494A2399200206F300967826 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		494A239B200227AF00967826 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
+		494A239D2002316B00967826 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		494A239F200231B300967826 /* AddTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTicketViewController.swift; sourceTree = "<group>"; };
+		494A23A12002320800967826 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		49C2CA0E20052D9A0071B894 /* DetailsTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTicketViewController.swift; sourceTree = "<group>"; };
+		49C2CA1020054F590071B894 /* podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = podfile; sourceTree = "<group>"; };
+		49C68B3C200BEE1E00482C32 /* PetObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetObject.swift; sourceTree = "<group>"; };
+		49D236E120069DA4007801A0 /* CreateNewTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewTicketViewController.swift; sourceTree = "<group>"; };
+		539AF1AC130230966429BFAD /* Pods_PetAlert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetAlert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED91042E6F3193CA71B3F378 /* Pods-PetAlert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetAlert.release.xcconfig"; path = "Pods/Target Support Files/Pods-PetAlert/Pods-PetAlert.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2631C6EA57944084F1329E5C /* Pods_PetAlert.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,8 +69,11 @@
 		494A234B2001313B00967826 = {
 			isa = PBXGroup;
 			children = (
+				49C2CA1020054F590071B894 /* podfile */,
 				494A23562001313B00967826 /* PetAlert */,
 				494A23552001313B00967826 /* Products */,
+				E630224E948B4D6911E3BFE8 /* Pods */,
+				49DAE618C0B7AF6D42C37CAA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +88,43 @@
 		494A23562001313B00967826 /* PetAlert */ = {
 			isa = PBXGroup;
 			children = (
-				494A23572001313B00967826 /* AppDelegate.swift */,
-				494A23592001313B00967826 /* FirstViewController.swift */,
-				494A235B2001313B00967826 /* SecondViewController.swift */,
-				494A235D2001313B00967826 /* Main.storyboard */,
-				494A23602001313B00967826 /* Assets.xcassets */,
-				494A23622001313B00967826 /* LaunchScreen.storyboard */,
 				494A23652001313B00967826 /* Info.plist */,
+				49328247200A1AB500B6C860 /* PetAlert.xcdatamodeld */,
+				494A23622001313B00967826 /* Main.storyboard */,
+				494A23602001313B00967826 /* Assets.xcassets */,
+				494A23572001313B00967826 /* AppDelegate.swift */,
+				494A239B200227AF00967826 /* MainTabController.swift */,
+				494A23592001313B00967826 /* LoginViewController.swift */,
+				494A235B2001313B00967826 /* TicketsViewController.swift */,
+				49D236E120069DA4007801A0 /* CreateNewTicketViewController.swift */,
+				494A239D2002316B00967826 /* PhotosViewController.swift */,
+				494A239F200231B300967826 /* AddTicketViewController.swift */,
+				4913E5B42003FA1900C34C8A /* CustomTableViewCell.swift */,
+				49C2CA0E20052D9A0071B894 /* DetailsTicketViewController.swift */,
+				494A2399200206F300967826 /* MapViewController.swift */,
+				494A23A12002320800967826 /* ProfileViewController.swift */,
+				494A236B2001318F00967826 /* PetModel.swift */,
+				4903E6F6200A40710018C008 /* CoreDataHelper.swift */,
+				49C68B3C200BEE1E00482C32 /* PetObject.swift */,
 			);
 			path = PetAlert;
+			sourceTree = "<group>";
+		};
+		49DAE618C0B7AF6D42C37CAA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				539AF1AC130230966429BFAD /* Pods_PetAlert.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E630224E948B4D6911E3BFE8 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3E18F86B55E860B4BD8D6E98 /* Pods-PetAlert.debug.xcconfig */,
+				ED91042E6F3193CA71B3F378 /* Pods-PetAlert.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +134,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 494A23682001313B00967826 /* Build configuration list for PBXNativeTarget "PetAlert" */;
 			buildPhases = (
+				28B0112678F50595238999B5 /* [CP] Check Pods Manifest.lock */,
 				494A23502001313B00967826 /* Sources */,
 				494A23512001313B00967826 /* Frameworks */,
 				494A23522001313B00967826 /* Resources */,
+				CF59153BA3B22DFF1CA3F0A1 /* [CP] Embed Pods Frameworks */,
+				0DA64A98B83EFEDDD651C37C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -126,42 +189,106 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				494A23642001313B00967826 /* LaunchScreen.storyboard in Resources */,
+				49C2CA1120054F590071B894 /* podfile in Resources */,
+				494A23642001313B00967826 /* Main.storyboard in Resources */,
 				494A23612001313B00967826 /* Assets.xcassets in Resources */,
-				494A235F2001313B00967826 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0DA64A98B83EFEDDD651C37C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PetAlert/Pods-PetAlert-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PetAlert/Pods-PetAlert-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		28B0112678F50595238999B5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PetAlert-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CF59153BA3B22DFF1CA3F0A1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PetAlert/Pods-PetAlert-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PetAlert/Pods-PetAlert-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		494A23502001313B00967826 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				494A235C2001313B00967826 /* SecondViewController.swift in Sources */,
 				494A23582001313B00967826 /* AppDelegate.swift in Sources */,
-				494A235A2001313B00967826 /* FirstViewController.swift in Sources */,
+				494A239C200227AF00967826 /* MainTabController.swift in Sources */,
+				494A235A2001313B00967826 /* LoginViewController.swift in Sources */,
+				49C68B3D200BEE1E00482C32 /* PetObject.swift in Sources */,
+				494A235C2001313B00967826 /* TicketsViewController.swift in Sources */,
+				49328249200A1AB500B6C860 /* PetAlert.xcdatamodeld in Sources */,
+				494A239E2002316B00967826 /* PhotosViewController.swift in Sources */,
+				494A23A0200231B300967826 /* AddTicketViewController.swift in Sources */,
+				49C2CA0F20052D9B0071B894 /* DetailsTicketViewController.swift in Sources */,
+				49D236E220069DA4007801A0 /* CreateNewTicketViewController.swift in Sources */,
+				4913E5B52003FA1900C34C8A /* CustomTableViewCell.swift in Sources */,
+				4903E6F7200A40710018C008 /* CoreDataHelper.swift in Sources */,
+				494A239A200206F300967826 /* MapViewController.swift in Sources */,
+				494A23A22002320800967826 /* ProfileViewController.swift in Sources */,
+				494A236C2001318F00967826 /* PetModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		494A235D2001313B00967826 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				494A235E2001313B00967826 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		494A23622001313B00967826 /* LaunchScreen.storyboard */ = {
+		494A23622001313B00967826 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				494A23632001313B00967826 /* Base */,
 			);
-			name = LaunchScreen.storyboard;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -276,6 +403,7 @@
 		};
 		494A23692001313B00967826 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3E18F86B55E860B4BD8D6E98 /* Pods-PetAlert.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -290,6 +418,7 @@
 		};
 		494A236A2001313B00967826 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED91042E6F3193CA71B3F378 /* Pods-PetAlert.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -324,6 +453,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		49328247200A1AB500B6C860 /* PetAlert.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				49328248200A1AB500B6C860 /* PetAlert.xcdatamodel */,
+			);
+			currentVersion = 49328248200A1AB500B6C860 /* PetAlert.xcdatamodel */;
+			path = PetAlert.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 494A234C2001313B00967826 /* Project object */;
 }
