@@ -28,8 +28,6 @@ class AddTicketViewController: UIViewController, UITableViewDataSource, UITableV
     
     //Our web service url
     let URL_GET_TEAMS = URL(string: "https://serwer1878270.home.pl/WebService/api/getallpets.php")
-    let cipacipa = "dupadupa"
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
