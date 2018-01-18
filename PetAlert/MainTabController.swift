@@ -15,4 +15,5 @@ class MainTabController : UITabBarController{
         super.viewDidLoad()
     }
     
+    let zmienna = 10
 }
