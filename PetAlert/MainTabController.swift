@@ -15,7 +15,5 @@ class MainTabController : UITabBarController{
         super.viewDidLoad()
     }
     
-    let zmienna = 10
- 
-    let iskra = "test"
+
 }
