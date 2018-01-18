@@ -16,4 +16,6 @@ class MainTabController : UITabBarController{
     }
     
     let zmienna = 10
+ 
+    let iskra = "test"
 }
