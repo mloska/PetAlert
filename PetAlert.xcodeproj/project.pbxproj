@@ -26,6 +26,8 @@
 		49C68B3D200BEE1E00482C32 /* PetObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C68B3C200BEE1E00482C32 /* PetObject.swift */; };
 		49D236E220069DA4007801A0 /* CreateNewTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D236E120069DA4007801A0 /* CreateNewTicketViewController.swift */; };
 		8446069F2011485300AED470 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8446069E2011485300AED470 /* PhotosViewController.swift */; };
+		849DC51920168342009B4054 /* PhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849DC51820168342009B4054 /* PhotoViewCell.swift */; };
+		849DC51C2016874C009B4054 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849DC51B2016874C009B4054 /* DataService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +53,8 @@
 		49D236E120069DA4007801A0 /* CreateNewTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateNewTicketViewController.swift; sourceTree = "<group>"; };
 		539AF1AC130230966429BFAD /* Pods_PetAlert.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PetAlert.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8446069E2011485300AED470 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
+		849DC51820168342009B4054 /* PhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewCell.swift; sourceTree = "<group>"; };
+		849DC51B2016874C009B4054 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		ED91042E6F3193CA71B3F378 /* Pods-PetAlert.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetAlert.release.xcconfig"; path = "Pods/Target Support Files/Pods-PetAlert/Pods-PetAlert.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,10 +92,11 @@
 		494A23562001313B00967826 /* PetAlert */ = {
 			isa = PBXGroup;
 			children = (
+				849DC51A201686F6009B4054 /* Services */,
+				849DC51720168311009B4054 /* VIEW */,
 				494A23652001313B00967826 /* Info.plist */,
 				49328247200A1AB500B6C860 /* PetAlert.xcdatamodeld */,
 				494A23622001313B00967826 /* Main.storyboard */,
-				8446069E2011485300AED470 /* PhotosViewController.swift */,
 				494A23602001313B00967826 /* Assets.xcassets */,
 				494A23572001313B00967826 /* AppDelegate.swift */,
 				494A239B200227AF00967826 /* MainTabController.swift */,
@@ -116,6 +121,23 @@
 				539AF1AC130230966429BFAD /* Pods_PetAlert.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		849DC51720168311009B4054 /* VIEW */ = {
+			isa = PBXGroup;
+			children = (
+				849DC51820168342009B4054 /* PhotoViewCell.swift */,
+				8446069E2011485300AED470 /* PhotosViewController.swift */,
+			);
+			path = VIEW;
+			sourceTree = "<group>";
+		};
+		849DC51A201686F6009B4054 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				849DC51B2016874C009B4054 /* DataService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		E630224E948B4D6911E3BFE8 /* Pods */ = {
@@ -265,6 +287,7 @@
 				494A23582001313B00967826 /* AppDelegate.swift in Sources */,
 				494A239C200227AF00967826 /* MainTabController.swift in Sources */,
 				494A235A2001313B00967826 /* LoginViewController.swift in Sources */,
+				849DC51920168342009B4054 /* PhotoViewCell.swift in Sources */,
 				49C68B3D200BEE1E00482C32 /* PetObject.swift in Sources */,
 				494A235C2001313B00967826 /* TicketsViewController.swift in Sources */,
 				49328249200A1AB500B6C860 /* PetAlert.xcdatamodeld in Sources */,
@@ -277,6 +300,7 @@
 				494A239A200206F300967826 /* MapViewController.swift in Sources */,
 				494A23A22002320800967826 /* ProfileViewController.swift in Sources */,
 				494A236C2001318F00967826 /* PetModel.swift in Sources */,
+				849DC51C2016874C009B4054 /* DataService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
