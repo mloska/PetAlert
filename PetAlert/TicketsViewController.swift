@@ -104,7 +104,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let counter = tableView.indexPathForSelectedRow?.row
             let petObject = pets![counter!]
             
-            destination.destPet = petObject
+            //destination.destPet = petObject
         }
     }
     

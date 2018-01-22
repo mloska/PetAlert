@@ -19,32 +19,31 @@ class DetailsTicketViewController: UIViewController {
     @IBOutlet weak var imageCtr: UIImageView!
     @IBOutlet weak var mapView: GMSMapView!
     
-    var destPet:PetEntity? = nil
+    var destPet = Pet()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        nameLbl.text = destPet?.name
-        breedLbl.text = destPet?.breed
-        colorLbl.text = destPet?.color
-        lastSeenDateLbl.text = destPet?.lastdate
-        lastSeenPlaceLbl.text = "\(destPet?.street ?? "")" + ", " + "\(destPet?.city ?? "")"
-        imageCtr.image = UIImage(data: (destPet?.imageBinary ?? Data())!)
-        
-        //imageCtr.image = UIImage(named: (destPet?.image)!)
-        let lat = destPet?.latitude
-        let long = destPet?.longitude
+        nameLbl.text = destPet.Name
+        breedLbl.text = destPet.Breed
+        colorLbl.text = destPet.Color
+        lastSeenDateLbl.text = destPet.LastDate
+        lastSeenPlaceLbl.text = "\(destPet.Street ?? "")" + ", " + "\(destPet.City ?? "")"
+        imageCtr.image = destPet.ImageData
+
+        let lat = destPet.Latitude
+        let long = destPet.Longitude 
         
         
         // Create a GMSCameraPosition that tells the map to display the
-        let camera = GMSCameraPosition.camera(withLatitude: lat!, longitude: long!, zoom: 16.0)
+        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 16.0)
         let map = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         
         // Creates a marker in the center of the map.
         let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: lat!, longitude: long!)
-        marker.title = "\(destPet?.name ?? "")"
-        marker.snippet = "\(destPet?.color ?? "")" + " " + "\(destPet?.breed ?? "")"
+        marker.position = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        marker.title = "\(destPet.Name ?? "")"
+        marker.snippet = "\(destPet.Color ?? "")" + " " + "\(destPet.Breed ?? "")"
         marker.map = self.mapView
         
         self.mapView.camera = camera;

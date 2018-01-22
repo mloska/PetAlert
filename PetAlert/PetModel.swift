@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Pet{
+class Pet : NSObject{
     var ID:             Int?
     var Name:           String?
     var Breed:          String?
@@ -23,10 +23,14 @@ class Pet{
     var Latitude:       Double = 0.0
     var Status:         String? //StatusTypeEnum?
     var Image:          String?
+    var ImageData:      UIImage? 
     var UserID:         Int?
     var UUID:           String?
     var DateTimeModification:  NSDate?
     
+    override init(){
+        
+    }
     
     init(
         ID: Int?,
@@ -42,6 +46,7 @@ class Pet{
         Latitude: Double?,
         Status: String?,
         Image: String?,
+        ImageData: UIImage?,
         UserID: Int?,
         UUID: String?,
         DateTimeModification: NSDate?) {
@@ -58,6 +63,7 @@ class Pet{
         self.Latitude = Latitude!
         self.Status = Status
         self.Image = Image
+        self.ImageData = ImageData
         self.UserID = UserID
         self.UUID = UUID
         self.DateTimeModification = DateTimeModification

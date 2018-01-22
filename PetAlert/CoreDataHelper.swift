@@ -124,6 +124,79 @@ class CoreDataHelper: NSObject {
         }
     }
     
+    
+    
+    let URL_GET_TEAMS = URL(string: "https://serwer1878270.home.pl/WebService/api/getallpets.php")
+    var petsArray:[Pet]? = []
+
+    func get_data_from_url_old (_ link:String){
+        //creating NSMutableURLRequest
+        let request = NSMutableURLRequest(url: URL_GET_TEAMS!)
+        
+        //setting the method to post
+        request.httpMethod = "GET"
+        
+        //creating a task to send the post request
+        let task = URLSession.shared.dataTask(with: request as URLRequest){
+            data, response, error in
+            
+            //exiting if there is some error
+            if error != nil{
+                print("error is \(error ?? "" as! Error)")
+                return;
+            }
+            
+            
+            do {
+                if let data = data,
+                    let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+                    let pets = json["pets"] as? [[String: Any]] {
+                    for pet in pets {
+                        let petObject:Pet = Pet()
+                        
+                        if let id = pet["ID"] as? Int                    {  petObject.ID = id  }
+                        if let name = pet["Name"] as? String                {  petObject.Name = name  }
+                        if let breed = pet["Breed"] as? String              {  petObject.Breed = breed  }
+                        if let color = pet["Color"] as? String              {  petObject.Color = color  }
+                        if let city = pet["City"] as? String                {  petObject.City = city  }
+                        if let street = pet["Street"] as? String            {  petObject.Street = street  }
+                        //                        if let petType = pet["PetType"] as? String          {  petObject.PetType = petType  }
+                        if let description = pet["Description"] as? String  {  petObject.Description = description  }
+                        if let lastDate = pet["LastDate"] as? String        {  petObject.LastDate = lastDate  }
+                        if let longitude = pet["Longitude"] as? Double      {  petObject.Longitude = longitude  }
+                        if let latitude = pet["Latitude"] as? Double        {  petObject.Latitude = latitude  }
+                        //                        if let status = pet["Status"] as? String            {  petObject.Status = status  }
+                        if let image = pet["Image"] as? String              {  petObject.Image = image  }
+                        if let userID = pet["UserID"] as? Int               {  petObject.UserID = userID  }
+                        if let uuid = pet["UUID"] as? String                {  petObject.UUID = uuid  }
+                        //                        if let dateTimeModification = pet["DateTimeModification"] as? NSDate {  petObject.DateTimeModification = dateTimeModification  }
+                        
+                        //                        let pecik = Pet(ID: petObject.ID, Name: petObject.Name, Breed: petObject.Breed, Color: petObject.Color, City: petObject.City, Street: petObject.Street, PetType: "", Description: petObject.description, LastDate: petObject.LastDate, Longitude: petObject.Longitude, Latitude: petObject.Latitude, Status: "1", Image: petObject.Image, UserID: petObject.UserID, UUID: petObject.UUID, DateTimeModification: NSDate())
+                        //
+                        //                        let pecikCons = Pet(ID: 1, Name: "a", Breed: "b", Color: "c", City: "c", Street: "s", PetType: "", Description: "d", LastDate: "l", Longitude: 2, Latitude: 3, Status: "1", Image: "asd", UserID: 3, UUID: "asd", DateTimeModification: NSDate())
+                        //
+                        //                        self.petsArray?.append(pecik)
+                        //                        self.petsArray?.append(pecikCons)
+                        self.petsArray?.append(petObject)
+                    }
+                }
+            } catch {
+                print("Error deserializing JSON: \(error)")
+            }
+            
+        }
+        
+        
+        print(petsArray?.count ?? 0)
+        
+        
+        
+        //executing the task
+        task.resume()
+        
+        
+    }
+    
    
 
 }
