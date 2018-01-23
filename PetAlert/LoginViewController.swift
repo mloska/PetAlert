@@ -9,7 +9,7 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -21,6 +21,10 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func loginTapped(_ sender: Any) {
+        let userID:Int = Int(arc4random_uniform(3)+1)
+        UserDefaults.standard.setValue(userID, forKey: "logged_user_ID")
+        print("From Login \(UserDefaults.standard.value(forKey: "logged_user_ID")!)")
+
         let mainTabController = storyboard?.instantiateViewController(withIdentifier: "MainTabController") as! MainTabController
         mainTabController.selectedViewController = mainTabController.viewControllers?[2]
         present(mainTabController, animated: true, completion: nil)

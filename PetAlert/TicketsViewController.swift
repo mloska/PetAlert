@@ -11,16 +11,21 @@ import RealmSwift
 
 class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    var pets:[PetEntity]? = nil
+    var pets:[Pet]? = []
     var refreshControl: UIRefreshControl!
     let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
+    //Web service url
+    let URL_GET_PETS_STR = "https://serwer1878270.home.pl/WebService/api/getallpetsforuser.php"
 
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pets = CoreDataHelper.fetchFilterData(userID: "21")
-        print(pets?.count ?? 0)
+        //let loggedUserID = UserDefaults.standard.value(forKey: "logged_user_ID")
+        
+        // establish connection for passing link and fire the main function
+        connectToJson(link: URL_GET_PETS_STR, mainFunctionName: mainTicketsFunction)
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -37,10 +42,14 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    func mainTicketsFunction (passedJsonArray: [[String: Any]]) {
+        // return to main array for this controller results from choped json into single objects in array
+        self.pets = JsonToArray(inputJsonArray: passedJsonArray)
+        self.tableView.reloadData()
+    }
+    
     @objc func refresh(_ sender: Any) {
-        pets = CoreDataHelper.fetchFilterData(userID: "21")
-        tableView.reloadData()
-        print("reloaded, counted pets:", pets?.count ?? 0)
+        connectToJson(link: URL_GET_PETS_STR, mainFunctionName: mainTicketsFunction)
         refreshControl.endRefreshing()
     }
     
@@ -63,27 +72,20 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.cellImage.layer.cornerRadius = cell.cellImage.frame.height / 2
         
         let petObject = pets![indexPath.row]
-        let petColor = petObject.value(forKey: "color")
-        let petBreed = petObject.value(forKey: "breed")
-        let petName = petObject.value(forKey: "name")
-        let petStreet = petObject.value(forKey: "street")
-        let petCity = petObject.value(forKey: "city")
-        let petImageBinary = petObject.value(forKey: "imageBinary") ?? NSData()
-        let petStatus = petObject.value(forKey: "status") as? String ?? ""
-        
-        cell.cellTitle.text = "\(petColor ?? "") \(petBreed ?? "")" + " (" +  "\(petName ?? "")" + ")"
-        cell.cellSubtitle.text = "\(petStreet ?? ""), \(petCity ?? "")"
-        cell.cellImage.image = UIImage(data: petImageBinary as! Data)
-        
-        if (petStatus == "Searching") {
+
+        cell.cellTitle.text = "\(petObject.Color ?? "") \(petObject.Breed ?? "")" + " (" +  "\(petObject.Name ?? "")" + ")"
+        cell.cellSubtitle.text = "\(petObject.Street ?? ""), \(petObject.City ?? "")"
+        cell.cellImage.image = petObject.ImageData
+
+        if (petObject.Status == "Searching") {
             cell.cellView.backgroundColor = .green
         }
-        else if (petStatus == "Found") {
+        else if (petObject.Status == "Found") {
             cell.cellView.backgroundColor = .purple
             cell.cellTitle.textColor = .red
             cell.cellSubtitle.textColor = .red
         }
-        else if (petStatus == "Spotted") {
+        else if (petObject.Status == "Spotted") {
             cell.cellView.backgroundColor = .orange
             cell.cellTitle.textColor = .black
             cell.cellSubtitle.textColor = .black
@@ -97,14 +99,10 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        pets = CoreDataHelper.fetchObject()
-        
         if let destination = segue.destination as? DetailsTicketViewController {
-            
             let counter = tableView.indexPathForSelectedRow?.row
             let petObject = pets![counter!]
-            
-            //destination.destPet = petObject
+            destination.destPet = petObject
         }
     }
     
@@ -122,18 +120,18 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         let deleteAction = UIContextualAction(style: .normal, title:  "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             let petObject = self.pets![indexPath.row]
             print("Before deleting: ", self.pets?.count ?? 0)
-            
-            if CoreDataHelper.deleteObject(pet: petObject) {
-                print("After deleting: ", self.pets?.count ?? 0)
-                print("OK, marked as Delete")
-                success(true)
-                self.pets = CoreDataHelper.fetchFilterData(userID: "21")
-                tableView.reloadData()
-            } else {
-                print("NOK, something went wrong with marking as Delete")
-                success(false)
-                tableView.reloadData()
-            }
+            // TODO
+//            if CoreDataHelper.deleteObject(pet: petObject) {
+//                print("After deleting: ", self.pets?.count ?? 0)
+//                print("OK, marked as Delete")
+//                success(true)
+//                self.pets = CoreDataHelper.fetchFilterData(userID: "21")
+//                tableView.reloadData()
+//            } else {
+//                print("NOK, something went wrong with marking as Delete")
+//                success(false)
+//                tableView.reloadData()
+//            }
             
             
         })
@@ -153,14 +151,15 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let petObject = self.pets![indexPath.row]
             petObject.setValue("Spotted", forKey: "status")
             petObject.setValue(NSDate(), forKey: "dateTimeModification")
-            do{
-                try self.managedContext.save()
-            }
-            catch
-            {
-                print(error)
-            }
-            self.pets = CoreDataHelper.fetchFilterData(userID: "21")
+            // TODO
+//            do{
+//                try self.managedContext.save()
+//            }
+//            catch
+//            {
+//                print(error)
+//            }
+//            self.pets = CoreDataHelper.fetchFilterData(userID: "21")
             tableView.reloadData()
             success(true)
         })
@@ -172,14 +171,15 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let petObject = self.pets![indexPath.row]
             petObject.setValue("Found", forKey: "status")
             petObject.setValue(NSDate(), forKey: "dateTimeModification")
-            do{
-                try self.managedContext.save()
-            }
-            catch
-            {
-                print(error)
-            }
-            self.pets = CoreDataHelper.fetchFilterData(userID: "21")
+            // TODO
+//            do{
+//                try self.managedContext.save()
+//            }
+//            catch
+//            {
+//                print(error)
+//            }
+//            self.pets = CoreDataHelper.fetchFilterData(userID: "21")
             tableView.reloadData()
             success(true)
         })

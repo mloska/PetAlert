@@ -259,27 +259,27 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
 
     @IBAction func saveButtonTapped(_ sender: Any) {
         
-        CoreDataHelper.saveObject(
-            name: nameInput.text!,
-            breed: breedInput.text!,
-            color: colorInput.text!,
-            status: selectedStatus,
-            image: "",
-            city: city,
-            street: street,
-            longitude: finalLongitude,
-            latitude: finalLatitude,
-            lastdate: lastSeenDateInput.text!,
-            uuid: UUID().uuidString,
-            dateTimeModification: NSDate(),
-            imageBinary: imageData,
-            petType: "Dog",
-            userID: 21
-            
-        )
+//        CoreDataHelper.saveObject(
+//            name: nameInput.text!,
+//            breed: breedInput.text!,
+//            color: colorInput.text!,
+//            status: selectedStatus,
+//            image: "",
+//            city: city,
+//            street: street,
+//            longitude: finalLongitude,
+//            latitude: finalLatitude,
+//            lastdate: lastSeenDateInput.text!,
+//            uuid: UUID().uuidString,
+//            dateTimeModification: NSDate(),
+//            imageBinary: imageData,
+//            petType: "Dog",
+//            userID: 21
+//
+//        )
         
         print("Dodano")
-        pets = CoreDataHelper.fetchObject()
+//        pets = CoreDataHelper.fetchObject()
         print(print(pets?.count ?? 0))
         
         let alert = UIAlertController(title: "Saved", message: "Your ticket has been saved", preferredStyle: .alert)

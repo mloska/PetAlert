@@ -16,7 +16,7 @@ class AddTicketViewController: UIViewController, UITableViewDataSource, UITableV
 
     @IBOutlet weak var tableView: UITableView!
     
-    //Our web service url
+    //Web service url
     let URL_GET_PETS_STR = "https://serwer1878270.home.pl/WebService/api/getallpets.php"
 
     override func viewDidLoad() {
@@ -47,6 +47,7 @@ class AddTicketViewController: UIViewController, UITableViewDataSource, UITableV
     
     @objc func refresh(_ sender: Any) {
         connectToJson(link: URL_GET_PETS_STR, mainFunctionName: mainAddTicketFunction)
+        refreshControl.endRefreshing()
     }
     
     @objc func dismiss(fromGesture gesture: UISwipeGestureRecognizer) {

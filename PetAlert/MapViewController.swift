@@ -13,7 +13,7 @@ class MapViewController: UIViewController {
 
     @IBOutlet weak var mapView: GMSMapView!
 
-    //Our web service url
+    //Web service url
     let URL_GET_PETS_STR = "https://serwer1878270.home.pl/WebService/api/getallpets.php"
     
     var petsArrayMap:[Pet]? = []
