@@ -17,28 +17,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Wgu-xI-58h">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Wgu-xI-58h">
+                                <rect key="frame" x="16" y="0.0" width="343" height="618"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="2DE-Ur-nyV">
-                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="itemSize" width="155" height="216"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="S5Y-ru-iix">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" reuseIdentifier="myCell" id="S5Y-ru-iix" customClass="PhotoViewCell" customModule="PetAlert" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="155" height="216"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="155" height="216"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8JP-8M-tqX">
+                                                    <rect key="frame" x="7" y="175" width="148" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.27497571243523311" green="0.27497571243523311" blue="0.27497571243523311" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4g2-JV-Mtl">
+                                                    <rect key="frame" x="0.0" y="0.0" width="155" height="154"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="155" id="Bky-qF-0Vk"/>
+                                                        <constraint firstAttribute="height" constant="154" id="a10-KH-XAa"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="4g2-JV-Mtl" firstAttribute="top" secondItem="S5Y-ru-iix" secondAttribute="top" id="QlU-cJ-XPf"/>
+                                            <constraint firstItem="4g2-JV-Mtl" firstAttribute="top" secondItem="S5Y-ru-iix" secondAttribute="top" id="exd-Zr-kUX"/>
+                                            <constraint firstItem="4g2-JV-Mtl" firstAttribute="leading" secondItem="S5Y-ru-iix" secondAttribute="leading" id="gVJ-Pn-hPn"/>
+                                            <constraint firstAttribute="trailing" secondItem="4g2-JV-Mtl" secondAttribute="trailing" id="vF0-8K-ghj"/>
+                                            <constraint firstAttribute="trailing" secondItem="4g2-JV-Mtl" secondAttribute="trailing" id="yjf-MK-HpE"/>
+                                            <constraint firstItem="4g2-JV-Mtl" firstAttribute="leading" secondItem="S5Y-ru-iix" secondAttribute="leading" id="zLZ-uK-ZZ2"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="petName" destination="8JP-8M-tqX" id="wB8-zU-6cP"/>
+                                            <outlet property="petPicture" destination="4g2-JV-Mtl" id="e0l-TO-F90"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="soc-Na-sit" firstAttribute="bottom" secondItem="Wgu-xI-58h" secondAttribute="bottom" id="6Bo-Ah-L6O"/>
                             <constraint firstItem="Wgu-xI-58h" firstAttribute="top" secondItem="6xN-za-n2W" secondAttribute="top" id="6G2-Dp-Zhd"/>
@@ -48,10 +76,13 @@
                         <viewLayoutGuide key="safeArea" id="soc-Na-sit"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Zdjęcia" image="icon_photo" selectedImage="icon_photo" id="I2H-CK-Kqb"/>
+                    <connections>
+                        <outlet property="dogsCollection" destination="Wgu-xI-58h" id="9cn-A9-7Ml"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x0E-Bg-fqb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="183" y="455"/>
+            <point key="canvasLocation" x="181.59999999999999" y="454.72263868065971"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="SOA-Vz-0my">
@@ -635,6 +666,6 @@
         <image name="icon_user" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="srX-gp-H2E"/>
+        <segue reference="wy1-kC-ljt"/>
     </inferredMetricsTieBreakers>
 </document>
