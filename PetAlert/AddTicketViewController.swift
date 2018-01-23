@@ -17,13 +17,14 @@ class AddTicketViewController: UIViewController, UITableViewDataSource, UITableV
     @IBOutlet weak var tableView: UITableView!
     
     //Our web service url
-    let URL_GET_TEAMS = URL(string: "https://serwer1878270.home.pl/WebService/api/getallpets.php")
-    let URL_GET_TEAMS_STR = "https://serwer1878270.home.pl/WebService/api/getallpets.php"
-    let URL_PHOTOS_MAIN_STR = "https://serwer1878270.home.pl/Images/User_"
+    let URL_GET_PETS_STR = "https://serwer1878270.home.pl/WebService/api/getallpets.php"
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        get_data_from_url(URL_GET_TEAMS_STR)
+        
+        // establish connection for passing link and fire the main function
+        connectToJson(link: URL_GET_PETS_STR, mainFunctionName: mainAddTicketFunction)
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
@@ -36,125 +37,20 @@ class AddTicketViewController: UIViewController, UITableViewDataSource, UITableV
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
 
-        // Do any additional setup after loading the view, typically from a nib.
     }
     
-    
-    func get_data_from_url(_ link:String)
-    {
-        let url:URL = URL(string: link)!
-        let session = URLSession.shared
-        
-        let request = NSMutableURLRequest(url: url)
-        request.httpMethod = "GET"
-        request.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
-        
-        let task = session.dataTask(with: request as URLRequest, completionHandler: {
-            (
-            data, response, error) in
-            
-            guard let _:Data = data, let _:URLResponse = response  , error == nil else {
-                
-                return
-            }
-            
-            self.extract_json(data!)
-            
-        })
-        
-        task.resume()
-        
-    }
-    
-    
-    func extract_json(_ data: Data)
-    {
-        var json: [String: Any] = [:]
-        var pets: [[String: Any]] = [[:]]
-
-        do
-        {
-            json = (try JSONSerialization.jsonObject(with: data) as? [String: Any])!
-            pets = (json["pets"] as? [[String: Any]])!
-        }
-        catch
-        {
-            return
-        }
-        
-        guard let data_list = json as?  [String: Any] else
-        {
-            return
-        }
-        
-        
-        if let pets_list = json as?  [String: Any]
-        {
-            
-            for pet in pets {
-                let petObject:Pet = Pet()
-                
-                if let id = pet["ID"] as? Int                       {  petObject.ID = id  }
-                if let name = pet["Name"] as? String                {  petObject.Name = name  }
-                if let breed = pet["Breed"] as? String              {  petObject.Breed = breed  }
-                if let color = pet["Color"] as? String              {  petObject.Color = color  }
-                if let city = pet["City"] as? String                {  petObject.City = city  }
-                if let street = pet["Street"] as? String            {  petObject.Street = street  }
-                if let petType = pet["PetType"] as? String          {  petObject.PetType = petType  }
-                if let description = pet["Description"] as? String  {  petObject.Description = description  }
-                if let lastDate = pet["LastDate"] as? String        {  petObject.LastDate = lastDate  }
-                if let longitude = pet["Longitude"] as? Double      {  petObject.Longitude = longitude  }
-                if let latitude = pet["Latitude"] as? Double        {  petObject.Latitude = latitude  }
-                if let status = pet["Status"] as? String            {  petObject.Status = status  }
-                if let image = pet["Image"] as? String              {  petObject.Image = image  }
-                if let userID = pet["UserID"] as? Int               {  petObject.UserID = userID  }
-                if let uuid = pet["UUID"] as? String                {  petObject.UUID = uuid  }
-                if let dateTimeModification = pet["DateTimeModification"] as? NSDate {  petObject.DateTimeModification = dateTimeModification  }
-              
-                if (petObject.Status == "1"){
-                    petObject.Status = "Searching"
-                }
-                else if (petObject.Status == "2"){
-                    petObject.Status = "Spotted"
-                }
-                else if (petObject.Status == "3"){
-                    petObject.Status = "Found"
-                }
-                
-                let imgURL = "\(URL_PHOTOS_MAIN_STR)" + "\(petObject.UserID!)" + "/" + "\(petObject.ID!)" + ".jpg"
-                
-                let url = URL(string:imgURL)
-                if let data = try? Data(contentsOf: url!)
-                {
-                    petObject.ImageData = UIImage(data: data)
-                }
-                
-                petsArray?.append(petObject)
-            }
-            
-        }
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-        
-        OperationQueue.main.addOperation ({
-            self.tableView.reloadData()
-        })
-
+    func mainAddTicketFunction (passedJsonArray: [[String: Any]]) {
+        // return to main array for this controller results from choped json into single objects in array
+        self.petsArray = JsonToArray(inputJsonArray: passedJsonArray)
+        self.tableView.reloadData()
     }
     
     @objc func refresh(_ sender: Any) {
-        get_data_from_url(URL_GET_TEAMS_STR)
-        tableView.reloadData()
-        print("reloaded, counted pets:", petsArray?.count ?? 0)
-        refreshControl.endRefreshing()
+        connectToJson(link: URL_GET_PETS_STR, mainFunctionName: mainAddTicketFunction)
     }
     
     @objc func dismiss(fromGesture gesture: UISwipeGestureRecognizer) {
         //navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-
-        //Here you should implement your checks for the swipe gesture
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
