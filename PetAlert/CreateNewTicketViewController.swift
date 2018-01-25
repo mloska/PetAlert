@@ -12,7 +12,9 @@ import CoreData
 
 class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
-    var pets:[PetEntity]? = nil
+    var pets:[Pet]? = []
+    
+    
     
     // inputs from storyboard
     @IBOutlet weak var nameInput: UITextField!
@@ -20,7 +22,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
     @IBOutlet weak var colorInput: UITextField!
     @IBOutlet weak var imageCtr: UIImageView!
     
-    // status
+    // status choice from picker
     @IBOutlet weak var statusInput: UITextField!
     let statuses = ["Found", "Searching"]
     var selectedStatus:String = ""
@@ -259,28 +261,123 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
 
     @IBAction func saveButtonTapped(_ sender: Any) {
         
-//        CoreDataHelper.saveObject(
-//            name: nameInput.text!,
-//            breed: breedInput.text!,
-//            color: colorInput.text!,
-//            status: selectedStatus,
-//            image: "",
-//            city: city,
-//            street: street,
-//            longitude: finalLongitude,
-//            latitude: finalLatitude,
-//            lastdate: lastSeenDateInput.text!,
-//            uuid: UUID().uuidString,
-//            dateTimeModification: NSDate(),
-//            imageBinary: imageData,
-//            petType: "Dog",
-//            userID: 21
-//
-//        )
+        let loggedUserID = UserDefaults.standard.value(forKey: "logged_user_ID")
+        let imageNameStr:String = ""
+        //URL to web service
+        let URL_SAVE_TEAM = "https://serwer1878270.home.pl/WebService/api/createpet.php"
+        
+//        var addedPet:Pet = Pet(ID: 0, Name: nameInput.text, Breed: breedInput.text, Color: colorInput.text, City: city, Street: street, PetType: "1", Description: "", LastDate: lastSeenDateInput.text, Longitude: finalLongitude, Latitude: finalLatitude, Status: selectedStatus, Image: imageNameStr, ImageData: UIImage(), UserID: loggedUserID as? Int, UUID: UUID().uuidString, DateTimeModification: NSDate())
+        
+        
+        //created NSURL
+        let requestURL = NSURL(string: URL_SAVE_TEAM)
+        
+        //creating NSMutableURLRequest
+        let request = NSMutableURLRequest(url: requestURL! as URL)
+        
+        //setting the method to post
+        request.httpMethod = "POST"
+        
+        //getting values from text fields
+        let name = nameInput.text
+        let breed = breedInput.text
+        let color = colorInput.text
+        let city = self.city
+        let street = self.street
+        let petType = "1"
+        let description = ""
+        let lastDate = picker.date
+        let longitude = finalLongitude
+        let latitude = finalLatitude
+        var status = selectedStatus
+        let image = imageNameStr
+        //let imageData = UIImage()
+        let userID = "\(loggedUserID ?? "0")"
+        let uuid = UUID().uuidString
+        let dateTimeModification = NSDate()
+        
+        // format date
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .medium
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let dateTimeModificationString = formatter.string(from: dateTimeModification as Date)
+        let lastDateString = formatter.string(from: lastDate as Date)
+
+        if (status == "Searching"){
+            status = "1"
+        } else if (status == "Spotted"){
+            status = "2"
+        } else if (status == "Found"){
+            status = "3"
+        } else {
+            status = "0"
+        }
+        
+        //creating the post parameter by concatenating the keys and values from text field
+        var postParameters = "name="+name!
+        postParameters+="&breed="+breed!
+        postParameters+="&color="+color!
+        postParameters+="&city="+city
+        postParameters+="&street="+street
+        postParameters+="&petType="+petType
+        postParameters+="&description="+description
+        postParameters+="&lastDate="+String(lastDateString)
+        postParameters+="&longitude="+String(longitude)
+        postParameters+="&latitude="+String(latitude)
+        postParameters+="&status="+status
+        postParameters+="&image="+image
+        postParameters+="&userID="+userID
+        postParameters+="&uuid="+uuid
+        postParameters+="&dateTimeModification="+dateTimeModificationString
+        //adding the parameters to request body
+        request.httpBody = postParameters.data(using: String.Encoding.utf8)
+        
+        
+        //creating a task to send the post request
+        let task = URLSession.shared.dataTask(with: request as URLRequest){
+            data, response, error in
+            
+            if error != nil{
+                print("error is \(String(describing: error))")
+                return;
+            }
+            
+            //parsing the response
+            do {
+                //converting resonse to NSDictionary
+                let myJSON =  try JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as? NSDictionary
+                
+                //parsing the json
+                if let parseJSON = myJSON {
+                    
+                    //creating a string
+                    var msg : String!
+                    
+                    //getting the json response
+                    msg = parseJSON["message"] as! String?
+                    
+                    //printing the response
+                    print(msg)
+                    
+                }
+            } catch {
+                print(error)
+            }
+            
+        }
+        //executing the task
+        task.resume()
+        
+        
+        
+        
+        
+        
         
         print("Dodano")
 //        pets = CoreDataHelper.fetchObject()
-        print(print(pets?.count ?? 0))
         
         let alert = UIAlertController(title: "Saved", message: "Your ticket has been saved", preferredStyle: .alert)
 

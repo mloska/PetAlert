@@ -155,6 +155,17 @@ func JsonToArray (inputJsonArray : [[String: Any]]) -> [Pet]{
 }
 
 
+
+
+enum petStatuses : Int {
+    case Searching = 1, Spotted = 2, Found = 3
+}
+
+let a: petStatuses? = petStatuses(rawValue: 2) // Spotted
+let b: petStatuses = .Spotted // 2
+
+
+
 class PetLocalization{
     var Longitude:      Float = 0.0
     var Latitude:       Float = 0.0

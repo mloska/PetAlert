@@ -23,7 +23,8 @@ class LoginViewController: UIViewController {
     @IBAction func loginTapped(_ sender: Any) {
         let userID:Int = Int(arc4random_uniform(3)+1)
         UserDefaults.standard.setValue(userID, forKey: "logged_user_ID")
-        print("From Login \(UserDefaults.standard.value(forKey: "logged_user_ID")!)")
+        let loggedUserID = UserDefaults.standard.value(forKey: "logged_user_ID")
+        print("From Login \(loggedUserID ?? "")!)")
 
         let mainTabController = storyboard?.instantiateViewController(withIdentifier: "MainTabController") as! MainTabController
         mainTabController.selectedViewController = mainTabController.viewControllers?[2]
