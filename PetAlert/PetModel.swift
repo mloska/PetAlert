@@ -140,7 +140,7 @@ func JsonToArray (inputJsonArray : [[String: Any]]) -> [Pet]{
             petObject.Status = "Found"
         }
         
-        let imgURL = "\(URL_PHOTOS_MAIN_STR)" + "\(petObject.UserID!)" + "/" + "\(petObject.ID!)" + ".jpg"
+        let imgURL = "\(URL_PHOTOS_MAIN_STR)" + "\(petObject.UserID!)" + "/" + "\(petObject.UUID!)" + ".jpg"
         
         let url = URL(string:imgURL)
         if let data = try? Data(contentsOf: url!)

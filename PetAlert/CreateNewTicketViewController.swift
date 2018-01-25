@@ -14,6 +14,10 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
 
     var pets:[Pet]? = []
     
+    //URL to web service
+    let URL_SAVE_PET = "https://serwer1878270.home.pl/WebService/api/createpet.php"
+    let URL_UPLOAD_PHOTO = "https://serwer1878270.home.pl/WebService/api/uploadImage.php"
+
     
     
     // inputs from storyboard
@@ -263,14 +267,13 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         
         let loggedUserID = UserDefaults.standard.value(forKey: "logged_user_ID")
         let imageNameStr:String = ""
-        //URL to web service
-        let URL_SAVE_TEAM = "https://serwer1878270.home.pl/WebService/api/createpet.php"
         
+
 //        var addedPet:Pet = Pet(ID: 0, Name: nameInput.text, Breed: breedInput.text, Color: colorInput.text, City: city, Street: street, PetType: "1", Description: "", LastDate: lastSeenDateInput.text, Longitude: finalLongitude, Latitude: finalLatitude, Status: selectedStatus, Image: imageNameStr, ImageData: UIImage(), UserID: loggedUserID as? Int, UUID: UUID().uuidString, DateTimeModification: NSDate())
         
         
         //created NSURL
-        let requestURL = NSURL(string: URL_SAVE_TEAM)
+        let requestURL = NSURL(string: URL_SAVE_PET)
         
         //creating NSMutableURLRequest
         let request = NSMutableURLRequest(url: requestURL! as URL)
@@ -361,6 +364,8 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
                     //printing the response
                     print(msg)
                     
+//                    self.myImageUploadRequest(urlUploadPhoto: self.URL_UPLOAD_PHOTO, myImageView: self.imageCtr)
+                    
                 }
             } catch {
                 print(error)
@@ -374,6 +379,10 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         
         
         
+        // upload photo
+        //UploadRequest(urlUploadPhoto: URL_UPLOAD_PHOTO, image: imageCtr)
+        myImageUploadRequest(urlUploadPhoto: URL_UPLOAD_PHOTO, myImageView: imageCtr, uuidParam: uuid)
+
         
         
         print("Dodano")
@@ -418,7 +427,207 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         initializeTheLocationManager()
         self.mapView.isMyLocationEnabled = true
     }
+    
+    
+    func generateBoundaryString() -> String
+    {
+        return "Boundary-\(NSUUID().uuidString)"
+    }
+    
+    
+    func myImageUploadRequest(urlUploadPhoto: String, myImageView: UIImageView, uuidParam: String)
+    {
+        let loggedUserID = UserDefaults.standard.value(forKey: "logged_user_ID")
+        let myUrl = NSURL(string: urlUploadPhoto);
+        
+        let request = NSMutableURLRequest(url:myUrl! as URL);
+        request.httpMethod = "POST";
+        
+        let param = [
+            "uuidName"  : "\(uuidParam)",
+            "userId"    : "\(loggedUserID ?? "0")"
+        ]
+        
+        let boundary = generateBoundaryString()
+        
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        
+        let imageData = UIImageJPEGRepresentation(myImageView.image!, 0.1)
+        
+        if(imageData==nil)  { return; }
+        
+        request.httpBody = createBodyWithParameters(parameters: param, filePathKey: "file", imageDataKey: imageData! as NSData, boundary: boundary, imageName: uuidParam) as Data
+        
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error ?? "" as! Error)")
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(response)")
+            
+            // Print out reponse body
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("****** response data = \(responseString!)")
+            
+            do {
+                let json = try JSONSerialization.jsonObject(with: data!, options: []) as? NSDictionary
+                
+                print(json ?? "")
+                
+                DispatchQueue.main.sync(execute: {
+                    
+                    myImageView.image = nil;
+                    
+                })
+                
+                
+                
+            }catch
+            {
+                print(error)
+            }
+            
+        }
+        
+        task.resume()
+    }
+    
+    
+    func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: NSData, boundary: String, imageName: String) -> NSData {
+        let body = NSMutableData();
+        
+        
+        if parameters != nil {
+            for (key, value) in parameters! {
+                body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
+                
+                body.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: String.Encoding.utf8)!)
+                body.append("\(value)\r\n".data(using: String.Encoding.utf8)!)
+            }
+        }
+        
+        let filename = "\(imageName).jpg"
+        let mimetype = "image/jpg"
+        
+        body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
+        body.append("Content-Disposition: form-data; name=\"\(filePathKey!)\"; filename=\"\(filename)\"\r\n".data(using: String.Encoding.utf8)!)
+        body.append("Content-Type: \(mimetype)\r\n\r\n".data(using: String.Encoding.utf8)!)
+        body.append(imageDataKey as Data)
+        body.append("\r\n".data(using: String.Encoding.utf8)!)
+        
+        
+        
+        body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
+        
+        return body
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // other way, to be deleted if optimalization is done
+    
+    
+//    func UploadRequest(urlUploadPhoto: String, image: UIImageView)
+//    {
+//        let url = NSURL(string: urlUploadPhoto)
+//
+//        let request = NSMutableURLRequest(url: url! as URL)
+//        request.httpMethod = "POST"
+//
+//        let boundary = generateBoundaryString()
+//
+//        //define the multipart request type
+//
+//        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+//
+//        if (image.image == nil)
+//        {
+//            return
+//        }
+//
+//        let image_data = UIImagePNGRepresentation(image.image!)
+//
+//
+//        if(image_data == nil)
+//        {
+//            return
+//        }
+//
+//
+//        let body = NSMutableData()
+//
+//        let fname = "test.png"
+//        let mimetype = "image/png"
+//
+//        //define the data post parameter
+//
+//        body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
+//        body.append("Content-Disposition:form-data; name=\"test\"\r\n\r\n".data(using: String.Encoding.utf8)!)
+//        body.append("hi\r\n".data(using: String.Encoding.utf8)!)
+//
+//        body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
+//        body.append("Content-Disposition:form-data; name=\"file\"; filename=\"\(fname)\"\r\n".data(using: String.Encoding.utf8)!)
+//        body.append("Content-Type: \(mimetype)\r\n\r\n".data(using: String.Encoding.utf8)!)
+//        body.append(image_data!)
+//        body.append("\r\n".data(using: String.Encoding.utf8)!)
+//
+//        body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
+//
+//
+//        request.httpBody = body as Data
+//
+//        let session = URLSession.shared
+//
+//        let task = session.dataTask(with: request as URLRequest) {
+//            (data, response, error) in
+//
+//            guard let _:NSData = data! as NSData, let _:URLResponse = response, error == nil else {
+//                print("error")
+//                return
+//            }
+//
+//            let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+//            print("dodane zdjecie")
+//            print(dataString ?? "")
+//
+//        }
+//
+//        task.resume()
+//
+//
+//    }
+//
+    
+    
+    
+    
 
+
+}
+
+extension NSMutableData {
+    
+    func appendString(string: String) {
+        let data = string.data(using: String.Encoding.utf8, allowLossyConversion: true)
+        append(data!)
+    }
 }
 
 
