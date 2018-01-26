@@ -380,8 +380,18 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         
         
         // upload photo
-        //UploadRequest(urlUploadPhoto: URL_UPLOAD_PHOTO, image: imageCtr)
-        myImageUploadRequest(urlUploadPhoto: URL_UPLOAD_PHOTO, myImageView: imageCtr, uuidParam: uuid)
+        myImageUploadRequest(urlUploadPhoto: URL_UPLOAD_PHOTO, myImage: imageCtr.image!, uuidParam: uuid, thumbnailMode: false)
+        
+        let imageData = UIImagePNGRepresentation(imageCtr.image!)!
+        let options = [
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceThumbnailMaxPixelSize: 300] as CFDictionary
+        let source = CGImageSourceCreateWithData(imageData as CFData, nil)!
+        let imageReference = CGImageSourceCreateThumbnailAtIndex(source, 0, options)!
+        let thumbnail = UIImage(cgImage: imageReference)
+        
+        myImageUploadRequest(urlUploadPhoto: URL_UPLOAD_PHOTO, myImage: thumbnail, uuidParam: uuid, thumbnailMode: true)
 
         
         
@@ -435,7 +445,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
     }
     
     
-    func myImageUploadRequest(urlUploadPhoto: String, myImageView: UIImageView, uuidParam: String)
+    func myImageUploadRequest(urlUploadPhoto: String, myImage: UIImage, uuidParam: String, thumbnailMode: Bool)
     {
         let loggedUserID = UserDefaults.standard.value(forKey: "logged_user_ID")
         let myUrl = NSURL(string: urlUploadPhoto);
@@ -453,11 +463,12 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
         
-        let imageData = UIImageJPEGRepresentation(myImageView.image!, 0.1)
+        let imageData = UIImageJPEGRepresentation(myImage, 0.1)
         
         if(imageData==nil)  { return; }
         
-        request.httpBody = createBodyWithParameters(parameters: param, filePathKey: "file", imageDataKey: imageData! as NSData, boundary: boundary, imageName: uuidParam) as Data
+        
+        request.httpBody = createBodyWithParameters(parameters: param, filePathKey: "file", imageDataKey: imageData! as NSData, boundary: boundary, imageName: uuidParam, thumbnail: thumbnailMode ? true : false) as Data
         
         
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
@@ -482,7 +493,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
                 
                 DispatchQueue.main.sync(execute: {
                     
-                    myImageView.image = nil;
+                    //myImage = nil;
                     
                 })
                 
@@ -499,7 +510,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
     }
     
     
-    func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: NSData, boundary: String, imageName: String) -> NSData {
+    func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: NSData, boundary: String, imageName: String, thumbnail: Bool) -> NSData {
         let body = NSMutableData();
         
         
@@ -512,7 +523,10 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
             }
         }
         
-        let filename = "\(imageName).jpg"
+        var filename = "\(imageName).jpg"
+        if (thumbnail){
+            filename="thumbnail_" + "\(filename)"
+        }
         let mimetype = "image/jpg"
         
         body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
@@ -527,98 +541,6 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         
         return body
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // other way, to be deleted if optimalization is done
-    
-    
-//    func UploadRequest(urlUploadPhoto: String, image: UIImageView)
-//    {
-//        let url = NSURL(string: urlUploadPhoto)
-//
-//        let request = NSMutableURLRequest(url: url! as URL)
-//        request.httpMethod = "POST"
-//
-//        let boundary = generateBoundaryString()
-//
-//        //define the multipart request type
-//
-//        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-//
-//        if (image.image == nil)
-//        {
-//            return
-//        }
-//
-//        let image_data = UIImagePNGRepresentation(image.image!)
-//
-//
-//        if(image_data == nil)
-//        {
-//            return
-//        }
-//
-//
-//        let body = NSMutableData()
-//
-//        let fname = "test.png"
-//        let mimetype = "image/png"
-//
-//        //define the data post parameter
-//
-//        body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
-//        body.append("Content-Disposition:form-data; name=\"test\"\r\n\r\n".data(using: String.Encoding.utf8)!)
-//        body.append("hi\r\n".data(using: String.Encoding.utf8)!)
-//
-//        body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
-//        body.append("Content-Disposition:form-data; name=\"file\"; filename=\"\(fname)\"\r\n".data(using: String.Encoding.utf8)!)
-//        body.append("Content-Type: \(mimetype)\r\n\r\n".data(using: String.Encoding.utf8)!)
-//        body.append(image_data!)
-//        body.append("\r\n".data(using: String.Encoding.utf8)!)
-//
-//        body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
-//
-//
-//        request.httpBody = body as Data
-//
-//        let session = URLSession.shared
-//
-//        let task = session.dataTask(with: request as URLRequest) {
-//            (data, response, error) in
-//
-//            guard let _:NSData = data! as NSData, let _:URLResponse = response, error == nil else {
-//                print("error")
-//                return
-//            }
-//
-//            let dataString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
-//            print("dodane zdjecie")
-//            print(dataString ?? "")
-//
-//        }
-//
-//        task.resume()
-//
-//
-//    }
-//
-    
-    
-    
-    
-
 
 }
 

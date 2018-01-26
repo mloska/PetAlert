@@ -44,7 +44,8 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     
     func mainTicketsFunction (passedJsonArray: [[String: Any]]) {
         // return to main array for this controller results from choped json into single objects in array
-        self.pets = JsonToArray(inputJsonArray: passedJsonArray)
+        self.pets = JsonToArray(inputJsonArray: passedJsonArray, downloadThumbnail: true)
+
         self.tableView.reloadData()
     }
     

@@ -41,7 +41,8 @@ class AddTicketViewController: UIViewController, UITableViewDataSource, UITableV
     
     func mainAddTicketFunction (passedJsonArray: [[String: Any]]) {
         // return to main array for this controller results from choped json into single objects in array
-        self.petsArray = JsonToArray(inputJsonArray: passedJsonArray)
+        self.petsArray = JsonToArray(inputJsonArray: passedJsonArray, downloadThumbnail: true)
+
         self.tableView.reloadData()
     }
     

@@ -27,7 +27,7 @@ class MapViewController: UIViewController {
     }
     
     func mainMapFunction (passedJsonArray: [[String: Any]]) {
-        self.petsArrayMap = JsonToArray(inputJsonArray: passedJsonArray)
+        self.petsArrayMap = JsonToArray(inputJsonArray: passedJsonArray, downloadThumbnail: true)
         
         let camera = GMSCameraPosition.camera(withLatitude: self.lat, longitude: self.long, zoom: 10.0)
         let map = GMSMapView.map(withFrame: CGRect.zero, camera: camera)

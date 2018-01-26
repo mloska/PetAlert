@@ -20,6 +20,8 @@ class DetailsTicketViewController: UIViewController {
     @IBOutlet weak var mapView: GMSMapView!
     
     var destPet = Pet()
+    let URL_PHOTOS_MAIN_STR = "https://serwer1878270.home.pl/Images/User_"
+    let thumbnailString = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +31,18 @@ class DetailsTicketViewController: UIViewController {
         colorLbl.text = destPet.Color
         lastSeenDateLbl.text = destPet.LastDate
         lastSeenPlaceLbl.text = "\(destPet.Street ?? "")" + ", " + "\(destPet.City ?? "")"
-        imageCtr.image = destPet.ImageData
+        let imgURL = "\(URL_PHOTOS_MAIN_STR)" + "\(destPet.UserID!)" + "/" + "\(thumbnailString)" + "\(destPet.UUID!)" + ".jpg"
+
+        // download full resolution of the image, not the thumbnail
+        let url = URL(string:imgURL)
+        if let data = try? Data(contentsOf: url!)
+        {
+            imageCtr.image = UIImage(data: data)
+        }
+        else {
+            imageCtr.image = destPet.ImageData
+        }
+        
 
         let lat = destPet.Latitude
         let long = destPet.Longitude 

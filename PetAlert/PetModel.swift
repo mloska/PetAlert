@@ -106,7 +106,7 @@ func connectToJson(link: String, mainFunctionName: @escaping ([[String: Any]]) -
 }
 
 // chop Json array into single objects
-func JsonToArray (inputJsonArray : [[String: Any]]) -> [Pet]{
+func JsonToArray (inputJsonArray : [[String: Any]], downloadThumbnail: Bool) -> [Pet]{
     let URL_PHOTOS_MAIN_STR = "https://serwer1878270.home.pl/Images/User_"
     var petsArrayReturn:[Pet]? = []
     
@@ -140,7 +140,12 @@ func JsonToArray (inputJsonArray : [[String: Any]]) -> [Pet]{
             petObject.Status = "Found"
         }
         
-        let imgURL = "\(URL_PHOTOS_MAIN_STR)" + "\(petObject.UserID!)" + "/" + "\(petObject.UUID!)" + ".jpg"
+        var thumbnailString: String = ""
+        if (downloadThumbnail){
+            thumbnailString = "thumbnail_"
+        }
+        
+        let imgURL = "\(URL_PHOTOS_MAIN_STR)" + "\(petObject.UserID!)" + "/" + "\(thumbnailString)" + "\(petObject.UUID!)" + ".jpg"
         
         let url = URL(string:imgURL)
         if let data = try? Data(contentsOf: url!)
