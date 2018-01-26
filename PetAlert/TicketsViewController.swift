@@ -14,19 +14,19 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var pets:[Pet]? = []
     var refreshControl: UIRefreshControl!
     let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
+    let loggedUserID = UserDefaults.standard.value(forKey: "logged_user_ID")
+
     //Web service url
-    let URL_GET_PETS_STR = "https://serwer1878270.home.pl/WebService/api/getallpetsforuser.php"
+    let URL_GET_PETS_STR = "https://serwer1878270.home.pl/WebService/api/getallpetsforuser.php?userID="
 
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //let loggedUserID = UserDefaults.standard.value(forKey: "logged_user_ID")
-        
+
         // establish connection for passing link and fire the main function
-        connectToJson(link: URL_GET_PETS_STR, mainFunctionName: mainTicketsFunction)
-        
+        connectToJson(link: URL_GET_PETS_STR + "\(loggedUserID ?? "-1")", mainFunctionName: mainTicketsFunction)
+        print (URL_GET_PETS_STR + "\(loggedUserID ?? "-1")")
         tableView.delegate = self
         tableView.dataSource = self
         tableView.reloadData()
@@ -49,7 +49,7 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     @objc func refresh(_ sender: Any) {
-        connectToJson(link: URL_GET_PETS_STR, mainFunctionName: mainTicketsFunction)
+        connectToJson(link: URL_GET_PETS_STR + "\(loggedUserID ?? "-1")", mainFunctionName: mainTicketsFunction)
         refreshControl.endRefreshing()
     }
     

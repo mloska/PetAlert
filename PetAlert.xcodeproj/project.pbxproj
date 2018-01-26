@@ -8,9 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2631C6EA57944084F1329E5C /* Pods_PetAlert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539AF1AC130230966429BFAD /* Pods_PetAlert.framework */; };
-		4903E6F7200A40710018C008 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4903E6F6200A40710018C008 /* CoreDataHelper.swift */; };
 		4913E5B52003FA1900C34C8A /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4913E5B42003FA1900C34C8A /* CustomTableViewCell.swift */; };
-		49328249200A1AB500B6C860 /* PetAlert.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 49328247200A1AB500B6C860 /* PetAlert.xcdatamodeld */; };
 		494A23582001313B00967826 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A23572001313B00967826 /* AppDelegate.swift */; };
 		494A235A2001313B00967826 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A23592001313B00967826 /* LoginViewController.swift */; };
 		494A235C2001313B00967826 /* TicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A235B2001313B00967826 /* TicketsViewController.swift */; };
@@ -32,9 +30,7 @@
 
 /* Begin PBXFileReference section */
 		3E18F86B55E860B4BD8D6E98 /* Pods-PetAlert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetAlert.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PetAlert/Pods-PetAlert.debug.xcconfig"; sourceTree = "<group>"; };
-		4903E6F6200A40710018C008 /* CoreDataHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataHelper.swift; sourceTree = "<group>"; };
 		4913E5B42003FA1900C34C8A /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
-		49328248200A1AB500B6C860 /* PetAlert.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PetAlert.xcdatamodel; sourceTree = "<group>"; };
 		494A23542001313B00967826 /* PetAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		494A23572001313B00967826 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		494A23592001313B00967826 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -95,7 +91,6 @@
 				849DC51A201686F6009B4054 /* Services */,
 				849DC51720168311009B4054 /* VIEW */,
 				494A23652001313B00967826 /* Info.plist */,
-				49328247200A1AB500B6C860 /* PetAlert.xcdatamodeld */,
 				494A23622001313B00967826 /* Main.storyboard */,
 				494A23602001313B00967826 /* Assets.xcassets */,
 				494A23572001313B00967826 /* AppDelegate.swift */,
@@ -109,7 +104,6 @@
 				494A2399200206F300967826 /* MapViewController.swift */,
 				494A23A12002320800967826 /* ProfileViewController.swift */,
 				494A236B2001318F00967826 /* PetModel.swift */,
-				4903E6F6200A40710018C008 /* CoreDataHelper.swift */,
 				49C68B3C200BEE1E00482C32 /* PetObject.swift */,
 			);
 			path = PetAlert;
@@ -290,13 +284,11 @@
 				849DC51920168342009B4054 /* PhotoViewCell.swift in Sources */,
 				49C68B3D200BEE1E00482C32 /* PetObject.swift in Sources */,
 				494A235C2001313B00967826 /* TicketsViewController.swift in Sources */,
-				49328249200A1AB500B6C860 /* PetAlert.xcdatamodeld in Sources */,
 				494A23A0200231B300967826 /* AddTicketViewController.swift in Sources */,
 				49C2CA0F20052D9B0071B894 /* DetailsTicketViewController.swift in Sources */,
 				49D236E220069DA4007801A0 /* CreateNewTicketViewController.swift in Sources */,
 				8446069F2011485300AED470 /* PhotosViewController.swift in Sources */,
 				4913E5B52003FA1900C34C8A /* CustomTableViewCell.swift in Sources */,
-				4903E6F7200A40710018C008 /* CoreDataHelper.swift in Sources */,
 				494A239A200206F300967826 /* MapViewController.swift in Sources */,
 				494A23A22002320800967826 /* ProfileViewController.swift in Sources */,
 				494A236C2001318F00967826 /* PetModel.swift in Sources */,
@@ -479,19 +471,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		49328247200A1AB500B6C860 /* PetAlert.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				49328248200A1AB500B6C860 /* PetAlert.xcdatamodel */,
-			);
-			currentVersion = 49328248200A1AB500B6C860 /* PetAlert.xcdatamodel */;
-			path = PetAlert.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 494A234C2001313B00967826 /* Project object */;
 }
