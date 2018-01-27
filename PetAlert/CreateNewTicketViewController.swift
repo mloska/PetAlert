@@ -10,7 +10,7 @@ import UIKit
 import GoogleMaps
 import CoreData
 
-class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, GMSMapViewDelegate {
 
     var pets:[Pet]? = []
     
@@ -40,6 +40,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
     var city:String = ""
     var finalLongitude:Double = 0.0
     var finalLatitude:Double = 0.0
+    var finalMarker:GMSMarker = GMSMarker()
     
     // Date Time picker
     @IBOutlet weak var lastSeenDateInput: UITextField!
@@ -154,53 +155,53 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         let location = locationManager.location?.coordinate
         let coordinate = CLLocationCoordinate2DMake(Double((location?.latitude)!), Double((location?.longitude)!))
         let marker = GMSMarker(position: coordinate)
+        self.mapView.clear()
         marker.isDraggable = true
+        marker.position = CLLocationCoordinate2DMake(coordinate.latitude, coordinate.longitude)
         marker.map = self.mapView
         self.mapView.animate(toLocation: coordinate)
-
-        
-        let geocoder = GMSGeocoder()
+        finalMarker = marker
         
         cameraMoveToLocation(toLocation: location)
+        self.mapView.animate(toLocation: coordinate)
+        self.finalLongitude = coordinate.longitude
+        self.finalLatitude = coordinate.latitude
         
-        geocoder.reverseGeocodeCoordinate(coordinate) { response, error in
+        getAddressBasedOnTheMarker(marker: finalMarker)
+        
+    }
+
+//    func mapView(_ mapView: GMSMapView, didDrag finalmarker: GMSMarker) {
+//        print("Drag")
+//    }
+//
+//    internal func mapView(_ mapView: GMSMapView, didBeginDragging marker: GMSMarker) {
+//        print("didBeginDragging")
+//    }
+    
+    internal func mapView(_ mapView: GMSMapView, didEndDragging marker: GMSMarker) {
+        print("didEndDragging")
+        getAddressBasedOnTheMarker(marker: marker)
+
+    }
+
+    func getAddressBasedOnTheMarker (marker: GMSMarker){
+        let geocoder = GMSGeocoder()
+
+        geocoder.reverseGeocodeCoordinate(marker.position) { response, error in
             if let location = response?.firstResult() {
-                let marker = GMSMarker(position: coordinate)
+                //let marker = GMSMarker(position: marker.coordinate)
                 marker.isDraggable = true
                 let lines = location.lines! as [String]
                 let value = lines.joined(separator: "\n")
                 self.street = lines[0]
                 self.city = lines[1].components(separatedBy: ",")[0]
-                
-                // show marker
-                marker.userData = value
-                marker.title = value
-                marker.infoWindowAnchor = CGPoint(x: 0.5, y: -0.25)
-                marker.accessibilityLabel = "current"
-                marker.map = self.mapView
-                
-                self.mapView.animate(toLocation: coordinate)
-                self.mapView.selectedMarker = marker
-                
                 self.lastSeenPlaceLbl.text = value
-                self.finalLongitude = coordinate.longitude
-                self.finalLatitude = coordinate.latitude
             }
         }
     }
 
-    func mapView(_ mapView: GMSMapView, didDrag marker: GMSMarker) {
-        print("Drag")
-    }
-    
-    func mapView(_ mapView: GMSMapView, didBeginDragging marker: GMSMarker) {
-        print("Old Coordinate - \(marker.position)")
-    }
-    
-    func mapView(_ mapView: GMSMapView, didEndDragging marker: GMSMarker) {
-        print("New Coordinate - \(marker.position)")
-    }
-    
+
    
     
     
@@ -431,6 +432,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
         createDatePicker()
         createStatusPicker()
         createToolbar()
