@@ -120,27 +120,66 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let deleteAction = UIContextualAction(style: .normal, title:  "Delete", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             let petObject = self.pets![indexPath.row]
-            print("Before deleting: ", self.pets?.count ?? 0)
-            // TODO
-//            if CoreDataHelper.deleteObject(pet: petObject) {
-//                print("After deleting: ", self.pets?.count ?? 0)
-//                print("OK, marked as Delete")
-//                success(true)
-//                self.pets = CoreDataHelper.fetchFilterData(userID: "21")
-//                tableView.reloadData()
-//            } else {
-//                print("NOK, something went wrong with marking as Delete")
-//                success(false)
-//                tableView.reloadData()
-//            }
-            
-            
+            let URL_DELETE_STR = "https://serwer1878270.home.pl/WebService/api/deletepet.php?petID=" + "\(petObject.ID ?? 0)"
+            connectToJson(link: URL_DELETE_STR, mainFunctionName: self.deleteFunction)
+            print("     usunieto: ", URL_DELETE_STR)
+
+            let URL_DELETE_IMG = "https://serwer1878270.home.pl/WebService/api/deleteImageFile.php?uuid=" + "\(petObject.UUID! )" + "&userId=" + "\(petObject.UserID!)"
+            self.myImageDeleteRequest(urlDeletePhoto: URL_DELETE_IMG)
+            print("     usunieto zdjecia: ", URL_DELETE_IMG)
         })
         deleteAction.image = UIImage(named: "icon_trash")
         deleteAction.backgroundColor = .red
         
         return UISwipeActionsConfiguration(actions: [editAction, deleteAction])
         
+    }
+    
+    func deleteFunction (passedJsonArray: [[String: Any]]) {
+        self.refresh((Any).self)
+        self.tableView.reloadData()
+    }
+    
+    func myImageDeleteRequest(urlDeletePhoto: String)
+    {
+        let myUrl = NSURL(string: urlDeletePhoto);
+        
+        let request = NSMutableURLRequest(url:myUrl! as URL);
+        request.httpMethod = "POST";
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            data, response, error in
+            
+            if error != nil {
+                print("error=\(error ?? "" as! Error)")
+                return
+            }
+            
+            // You can print out response object
+            print("******* response = \(response)")
+            
+            // Print out reponse body
+            let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
+            print("****** response data = \(responseString!)")
+            
+            do {
+                let json = try JSONSerialization.jsonObject(with: data!, options: []) as? NSDictionary
+                print(json ?? "")
+                
+                DispatchQueue.main.sync(execute: {
+                    self.refresh((Any).self)
+                    self.tableView.reloadData()
+                })
+                
+            } catch
+            {
+                print(error)
+            }
+            
+        }
+        self.refresh((Any).self)
+        self.tableView.reloadData()
+        task.resume()
     }
     
     //swipe on the right side
