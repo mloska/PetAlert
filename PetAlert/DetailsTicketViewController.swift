@@ -25,13 +25,14 @@ class DetailsTicketViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setUpNavBar()
+        
         nameLbl.text = destPet.Name
         breedLbl.text = destPet.Breed
         colorLbl.text = destPet.Color
         lastSeenDateLbl.text = destPet.LastDate
         lastSeenPlaceLbl.text = "\(destPet.Street ?? "")" + ", " + "\(destPet.City ?? "")"
-        let imgURL = "\(URL_PHOTOS_MAIN_STR)" + "\(destPet.UserID!)" + "/" + "\(thumbnailString)" + "\(destPet.UUID!)" + ".jpg"
+        let imgURL = "\(URL_PHOTOS_MAIN_STR)" + "\(destPet.UserID ?? 0 )" + "/" + "\(thumbnailString)" + "\(destPet.UUID ?? "" )" + ".jpg"
 
         // download full resolution of the image, not the thumbnail
         let url = URL(string:imgURL)
@@ -87,6 +88,21 @@ class DetailsTicketViewController: UIViewController {
         sender.view?.removeFromSuperview()
     }
 
+    func setUpNavBar () {
+        let found = UIBarButtonItem(title: "Found", style: .done, target: self, action: #selector(foundTapped))
+        let spotted = UIBarButtonItem(title: "Spotted", style: .plain, target: self, action: #selector(spottedTapped))
+        
+        self.navigationItem.rightBarButtonItems = [found, spotted]
+
+    }
+    
+    @objc func foundTapped (){
+        print ("foundTapped")
+    }
+    
+    @objc func spottedTapped(){
+        print ("spottedTapped")
+    }
 
 
 }

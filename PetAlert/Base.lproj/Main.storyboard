@@ -4,6 +4,7 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -669,6 +670,6 @@
         <image name="icon_user" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="srX-gp-H2E"/>
+        <segue reference="wy1-kC-ljt"/>
     </inferredMetricsTieBreakers>
 </document>
