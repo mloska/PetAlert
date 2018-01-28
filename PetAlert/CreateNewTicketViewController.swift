@@ -106,6 +106,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
     
     
     // ************** Last date time picker
+    // TODO: universilize this function so there are used in many places
 
     func createDatePicker() {
         
@@ -167,8 +168,12 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         self.finalLongitude = coordinate.longitude
         self.finalLatitude = coordinate.latitude
         
-        getAddressBasedOnTheMarker(marker: finalMarker)
-        
+        getAddressBasedOnTheMarker(marker: marker) { streetVal, cityVal, placeStringVal in
+            self.street = streetVal
+            self.city = cityVal
+            self.lastSeenPlaceLbl.text = placeStringVal
+        }
+
     }
 
 //    func mapView(_ mapView: GMSMapView, didDrag finalmarker: GMSMarker) {
@@ -180,30 +185,13 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
 //    }
     
     internal func mapView(_ mapView: GMSMapView, didEndDragging marker: GMSMarker) {
-        print("didEndDragging")
-        getAddressBasedOnTheMarker(marker: marker)
-
-    }
-
-    func getAddressBasedOnTheMarker (marker: GMSMarker){
-        let geocoder = GMSGeocoder()
-
-        geocoder.reverseGeocodeCoordinate(marker.position) { response, error in
-            if let location = response?.firstResult() {
-                //let marker = GMSMarker(position: marker.coordinate)
-                marker.isDraggable = true
-                let lines = location.lines! as [String]
-                let value = lines.joined(separator: "\n")
-                self.street = lines[0]
-                self.city = lines[1].components(separatedBy: ",")[0]
-                self.lastSeenPlaceLbl.text = value
-            }
+        getAddressBasedOnTheMarker(marker: marker) { streetVal, cityVal, placeStringVal in
+            self.street = streetVal
+            self.city = cityVal
+            self.lastSeenPlaceLbl.text = placeStringVal
         }
+        
     }
-
-
-   
-    
     
     func cameraMoveToLocation(toLocation: CLLocationCoordinate2D?) {
         if toLocation != nil {
@@ -482,8 +470,8 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
             }
             
             // You can print out response object
-            print("******* response = \(response)")
-            
+            print("******* response = \(response ?? URLResponse())")
+
             // Print out reponse body
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             print("****** response data = \(responseString!)")

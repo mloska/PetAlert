@@ -218,6 +218,7 @@
                     <connections>
                         <outlet property="tableView" destination="FLB-ss-gIf" id="GSs-qS-MGe"/>
                         <segue destination="BbH-XE-02X" kind="show" identifier="showNewTicketDetails" id="srX-gp-H2E"/>
+                        <segue destination="LSs-r7-GGi" kind="show" identifier="qucikChangeStatusTicketSegue" id="SHX-2P-FH9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9eG-Mk-n1I" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -573,7 +574,7 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WFw-K9-JuE" customClass="GMSMapView">
                                 <rect key="frame" x="16" y="269" width="351" height="296"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -591,6 +592,7 @@
                         <outlet property="lastSeenPlaceLbl" destination="h9d-oE-spi" id="Tat-22-fs5"/>
                         <outlet property="mapView" destination="WFw-K9-JuE" id="I8j-yp-1yW"/>
                         <outlet property="nameLbl" destination="22Q-AY-xNz" id="I2u-q2-YZ4"/>
+                        <segue destination="LSs-r7-GGi" kind="show" identifier="changeStatusTicketSegue" id="5LE-X9-fvO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s8B-7c-0op" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -601,6 +603,63 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1692" y="1153.6731634182909"/>
+        </scene>
+        <!--Change Status View Controller-->
+        <scene sceneID="ISK-yb-AoJ">
+            <objects>
+                <viewController storyboardIdentifier="ChangeStatusViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="LSs-r7-GGi" customClass="ChangeStatusViewController" customModule="PetAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hvv-S1-m2F">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4j5-YM-hTX" customClass="GMSMapView">
+                                <rect key="frame" x="12" y="149" width="351" height="296"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pet's name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FQ6-nF-CJe">
+                                <rect key="frame" x="16" y="65" width="343" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Changing status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q92-2P-aWL">
+                                <rect key="frame" x="16" y="101" width="162" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last seen" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PZG-ZM-9RB">
+                                <rect key="frame" x="186" y="101" width="158" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mfs-Sh-mrw">
+                                <rect key="frame" x="16" y="453" width="343" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="QoK-LO-gFz"/>
+                    </view>
+                    <connections>
+                        <outlet property="lastSeenCtrl" destination="PZG-ZM-9RB" id="vkE-qY-x4Q"/>
+                        <outlet property="mapView" destination="4j5-YM-hTX" id="SPx-hK-wzi"/>
+                        <outlet property="petName" destination="FQ6-nF-CJe" id="WzG-kd-r2Y"/>
+                        <outlet property="statusLbl" destination="Q92-2P-aWL" id="cbm-uR-UdA"/>
+                        <outlet property="updatedPlaceTxt" destination="mfs-Sh-mrw" id="5ab-Y3-0qi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JqC-JR-YRx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2712.8000000000002" y="1154.5727136431785"/>
         </scene>
         <!--Profil-->
         <scene sceneID="Huq-LT-ttn">
@@ -670,6 +729,7 @@
         <image name="icon_user" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="wy1-kC-ljt"/>
+        <segue reference="SHX-2P-FH9"/>
+        <segue reference="srX-gp-H2E"/>
     </inferredMetricsTieBreakers>
 </document>

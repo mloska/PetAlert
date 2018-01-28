@@ -15,7 +15,11 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     var refreshControl: UIRefreshControl!
     let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let loggedUserID = UserDefaults.standard.value(forKey: "logged_user_ID")
-
+    // necessary for segue know if if spotted or found
+    var buttonStatusTapped: String = ""
+    // necessary to detects what raw has been swiped right/left
+    var swipedRow: Int = 0
+    
     //Web service url
     let URL_GET_PETS_STR = "https://serwer1878270.home.pl/WebService/api/getallpetsforuser.php?userID="
 
@@ -105,6 +109,11 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
             let petObject = pets![counter!]
             destination.destPet = petObject
         }
+        if let destination = segue.destination as? ChangeStatusViewController {
+            let counter = swipedRow
+            destination.sentPetToChange = pets![counter]
+            destination.sentStatus = buttonStatusTapped
+        }
     }
     
     //swipe on the left side
@@ -156,8 +165,8 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
             }
             
             // You can print out response object
-            print("******* response = \(response)")
-            
+            print("******* response = \(response ?? URLResponse())")
+
             // Print out reponse body
             let responseString = NSString(data: data!, encoding: String.Encoding.utf8.rawValue)
             print("****** response data = \(responseString!)")
@@ -188,18 +197,11 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
     {
         let spottedAction = UIContextualAction(style: .normal, title:  "Spotted", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             print("OK, marked as Spotted")
-            let petObject = self.pets![indexPath.row]
-            petObject.setValue("Spotted", forKey: "status")
-            petObject.setValue(NSDate(), forKey: "dateTimeModification")
-            // TODO
-//            do{
-//                try self.managedContext.save()
-//            }
-//            catch
-//            {
-//                print(error)
-//            }
-//            self.pets = CoreDataHelper.fetchFilterData(userID: "21")
+            self.buttonStatusTapped = "spotted"
+            self.swipedRow = indexPath.row
+            self.performSegue(withIdentifier: "qucikChangeStatusTicketSegue", sender: self)
+
+            
             tableView.reloadData()
             success(true)
         })
@@ -208,18 +210,11 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         
         let foundAction = UIContextualAction(style: .normal, title:  "Found", handler: { (ac:UIContextualAction, view:UIView, success:(Bool) -> Void) in
             print("OK, marked as Found")
-            let petObject = self.pets![indexPath.row]
-            petObject.setValue("Found", forKey: "status")
-            petObject.setValue(NSDate(), forKey: "dateTimeModification")
-            // TODO
-//            do{
-//                try self.managedContext.save()
-//            }
-//            catch
-//            {
-//                print(error)
-//            }
-//            self.pets = CoreDataHelper.fetchFilterData(userID: "21")
+            self.buttonStatusTapped = "found"
+            self.swipedRow = indexPath.row
+            self.performSegue(withIdentifier: "qucikChangeStatusTicketSegue", sender: self)
+
+            
             tableView.reloadData()
             success(true)
         })

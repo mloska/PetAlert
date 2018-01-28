@@ -23,6 +23,10 @@ class DetailsTicketViewController: UIViewController {
     let URL_PHOTOS_MAIN_STR = "https://serwer1878270.home.pl/Images/User_"
     let thumbnailString = ""
     
+    // within segue check what invoked the action, what button as they do the same with small logic changes
+    var buttonStatusTapped: String = ""
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpNavBar()
@@ -98,10 +102,24 @@ class DetailsTicketViewController: UIViewController {
     
     @objc func foundTapped (){
         print ("foundTapped")
+        buttonStatusTapped = "found"
+        performSegue(withIdentifier: "changeStatusTicketSegue", sender: self)
+
     }
     
     @objc func spottedTapped(){
         print ("spottedTapped")
+        buttonStatusTapped = "spotted"
+        performSegue(withIdentifier: "changeStatusTicketSegue", sender: self)
+
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ChangeStatusViewController {
+            destination.sentPetToChange = destPet
+            destination.sentStatus = buttonStatusTapped
+        }
     }
 
 
