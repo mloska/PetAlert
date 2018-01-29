@@ -12,44 +12,59 @@ import GoogleMaps
 class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
 
     @IBOutlet weak var mapView: GMSMapView!
-
+    @IBOutlet weak var sliderValueLbl: UILabel!
+    @IBAction func changedSlider(_ sender: UISlider) {
+        let currentValue = Int(sender.value)
+        sliderValueLbl.text = "\(currentValue)"
+        let coordinateValues = locationManager.location?.coordinate
+        let radiusKM = currentValue
+        //mapView?.clear()
+        drawCircle(coordinate: (coordinateValues)!, radius: Double(radiusKM))
+        //reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusKM))
+    }
+    
     //Web service url
     var URL_GET_PETS_RADIUS_STR = "https://serwer1878270.home.pl/WebService/api/getallpetsforselectedradius.php"
-    
     var petsArrayMap:[Pet]? = []
-    let lat = 50.09000833
-    let long = 20.01274005
     var locationManager = CLLocationManager()
-    let myCircle = GMSCircle()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeTheLocationManager()
         mapView.delegate = self
         self.mapView.isMyLocationEnabled = true
-        //drawCircle(coordinate: (locationManager.location?.coordinate)!)
-        //https:serwer1878270.home.pl/WebService/api/getallpetsforselectedradius.php?centerLatitude=50.020049&centerLongitude=19.906647&radiusKM=5
-        
-        let latitude = locationManager.location?.coordinate.latitude
-        let longitude = locationManager.location?.coordinate.longitude
+        let coordinateValues = locationManager.location?.coordinate
         let radiusKM:Double = 10
-        
-        let circleCenter = CLLocationCoordinate2D(latitude: (latitude)!, longitude: (longitude)!)
-        let circ = GMSCircle(position: circleCenter, radius: 1000*radiusKM) //radius is in meters
-        circ.fillColor = UIColor(red: 0.09, green: 0.6, blue: 0.41, alpha: 0.5)
-        circ.strokeColor = .black
-        circ.strokeWidth = 1
-        circ.map = mapView
-        URL_GET_PETS_RADIUS_STR = "\(URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(latitude ?? 0)" + "&centerLongitude=" + "\(longitude ?? 0)" + "&radiusKM=" + "\(radiusKM*0.621371192)"
-        
-        connectToJson(link: URL_GET_PETS_RADIUS_STR, mainFunctionName: mainMapFunction)
+        if (sliderValueLbl.text == "Label"){
+            sliderValueLbl.text = "\(radiusKM)"
+        }
+        //changedSlider(UISlider())
+        drawCircle(coordinate: (coordinateValues)!, radius: radiusKM)
+        print("lat: ", coordinateValues?.latitude ?? 0)
+        print("long: ", coordinateValues?.longitude ?? 0)
 
-        // Do any additional setup after loading the view, typically from a nib.
+        //https:serwer1878270.home.pl/WebService/api/getallpetsforselectedradius.php?centerLatitude=50.020049&centerLongitude=19.906647&radiusKM=5
+        reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: radiusKM)
+
     }
     
-    func drawCircle (coordinate: CLLocationCoordinate2D){
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        let coordinateValues = locationManager.location?.coordinate
+//        print("updated lat: ", coordinateValues?.latitude ?? 0)
+//        print("updated long: ", coordinateValues?.longitude ?? 0)
+//        //drawCircle(coordinate: (coordinateValues)!)
+//
+//    }
+    
+    func reloadDataOnMap(lat: CLLocationDegrees, long: CLLocationDegrees, rad: Double){
+        URL_GET_PETS_RADIUS_STR = "\(URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)"
+        print(URL_GET_PETS_RADIUS_STR)
+        connectToJson(link: URL_GET_PETS_RADIUS_STR, mainFunctionName: mainMapFunction)
+    }
+    
+    func drawCircle (coordinate: CLLocationCoordinate2D, radius: Double){
         let circle = GMSCircle()
-        circle.radius = 3500 // Meters
+        circle.radius = radius * 1000 // Meters
         circle.fillColor = UIColor(red: 0.09, green: 0.6, blue: 0.41, alpha: 0.5)
         circle.position = (coordinate) // Your CLLocationCoordinate2D  position
         circle.strokeWidth = 1;
@@ -88,6 +103,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         locationManager.startUpdatingLocation()
     }
     
+
 
 }
 
