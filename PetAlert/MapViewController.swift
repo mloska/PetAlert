@@ -8,8 +8,15 @@
 
 import UIKit
 import GoogleMaps
+import GooglePlaces
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate {
+struct MyPlace {
+    var name: String
+    var lat: Double
+    var long: Double
+}
+
+class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, GMSAutocompleteViewControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var mapView: GMSMapView!
     @IBOutlet weak var sliderValueLbl: UILabel!
@@ -30,40 +37,78 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     let customMarkerWidth: Int = 50
     let customMarkerHeight: Int = 70
     var chosenMarkerID: Int = 0
-    
+    var chosenPlace: MyPlace?
+    let radiusKM:Double = 10
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        initializeTheLocationManager()
+        //initializeTheLocationManager()
         mapView.delegate = self
-        self.mapView.isMyLocationEnabled = true
+        txtFieldSearch.delegate = self
+
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        locationManager.startMonitoringSignificantLocationChanges()
         let coordinateValues = locationManager.location?.coordinate
-        let radiusKM:Double = 10
+        
+        setupSearchField()
+        initGoogleMaps(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!)
+        
         if (sliderValueLbl.text == "Label"){
             sliderValueLbl.text = "\(radiusKM)"
         }
-        print("lat: ", coordinateValues?.latitude ?? 0)
-        print("long: ", coordinateValues?.longitude ?? 0)
         
         customMarkerPreviewView=CustomMarkerPreviewView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width-100, height: 190))
-        drawCircle(coordinate: (coordinateValues)!, radius: radiusKM)
 
-        //https:serwer1878270.home.pl/WebService/api/getallpetsforselectedradius.php?centerLatitude=50.020049&centerLongitude=19.906647&radiusKM=5
         reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: radiusKM)
+        
 
     }
     
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        let coordinateValues = locationManager.location?.coordinate
-//        print("updated lat: ", coordinateValues?.latitude ?? 0)
-//        print("updated long: ", coordinateValues?.longitude ?? 0)
-//        //drawCircle(coordinate: (coordinateValues)!)
-//
-//    }
+    func initGoogleMaps(lat: Double, long: Double) {
+        let camera = GMSCameraPosition.camera(withLatitude: 28.7041, longitude: 77.1025, zoom: 10.0)
+        self.mapView.camera = camera
+        self.mapView.delegate = self
+        self.mapView.isMyLocationEnabled = true
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        locationManager.delegate = nil
+        locationManager.stopUpdatingLocation()
+        let location = locations.last
+        let lat = (location?.coordinate.latitude)!
+        let long = (location?.coordinate.longitude)!
+        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 10.0)
+        
+        self.mapView?.animate(to: camera)
+        
+        showMarkers()
+    }
     
     func reloadDataOnMap(lat: CLLocationDegrees, long: CLLocationDegrees, rad: Double){
+        petsArrayMap = []
         URL_GET_PETS_RADIUS_STR = "\(URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)"
         print(URL_GET_PETS_RADIUS_STR)
         connectToJson(link: URL_GET_PETS_RADIUS_STR, mainFunctionName: mainMapFunction)
+        drawCircle(coordinate: (CLLocationCoordinate2D(latitude: lat, longitude: long)), radius: radiusKM)
+    }
+    
+    func mainMapFunction (passedJsonArray: [[String: Any]]) {
+        self.petsArrayMap = JsonToArray(inputJsonArray: passedJsonArray, downloadThumbnail: true)
+        
+        let camera = GMSCameraPosition.camera(withLatitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!, zoom: 10.0)
+        //let map = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        
+        showMarkers()
+        
+        self.mapView.settings.compassButton = true
+        self.mapView.settings.myLocationButton = true
+        self.mapView.settings.scrollGestures = true
+        self.mapView.settings.zoomGestures = true
+        
+        self.mapView.camera = camera;
+        //self.mapView = map
     }
     
     func drawCircle (coordinate: CLLocationCoordinate2D, radius: Double){
@@ -75,24 +120,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         circle.strokeColor = UIColor.black
         circle.map = mapView; // Add it to the map
     }
-    
-    func mainMapFunction (passedJsonArray: [[String: Any]]) {
-        self.petsArrayMap = JsonToArray(inputJsonArray: passedJsonArray, downloadThumbnail: true)
-        
-        let camera = GMSCameraPosition.camera(withLatitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!, zoom: 10.0)
-        let map = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-        
-        showMarkers()
-        
-        self.mapView.settings.compassButton = true
-        self.mapView.settings.myLocationButton = true
-        self.mapView.settings.scrollGestures = true
-        self.mapView.settings.zoomGestures = true
-        
-        self.mapView.camera = camera;
-        self.mapView = map
-    }
-    
     
     func initializeTheLocationManager()
     {
@@ -134,7 +161,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     }
     
     func showMarkers() {
-        //mapView.clear()
+        //self.mapView?.clear()
         for (index, pet) in self.petsArrayMap!.enumerated() {
             let marker=GMSMarker()
             let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: customMarkerWidth, height: customMarkerHeight), image: pet.ImageData ?? UIImage(), borderColor: UIColor.darkGray, tag: index)
@@ -160,6 +187,88 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
             let petObject = petsArrayMap![arrayIndex]
             destination.destPet = petObject
         }
+    }
+    
+    
+    
+    
+    
+    // places and search
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        let lat = place.coordinate.latitude
+        let long = place.coordinate.longitude
+        let radiusKM:Double = 10
+        print ("skonczylem szukanie ostatniej lokalizacji. Lat: ", lat, ", Long: ", long)
+        self.mapView.clear()
+        reloadDataOnMap(lat: lat, long: long, rad: radiusKM)
+
+        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 12.0)
+        self.mapView?.camera = camera
+        txtFieldSearch.text=place.formattedAddress
+        chosenPlace = MyPlace(name: place.formattedAddress!, lat: lat, long: long)
+        let marker=GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        marker.title = "\(place.name)"
+        marker.snippet = "\(place.formattedAddress!)"
+        marker.map = self.mapView
+        
+        drawCircle(coordinate: marker.position, radius: radiusKM)
+
+        
+        self.dismiss(animated: true, completion: nil) // dismiss after place selected
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        print("ERROR AUTO COMPLETE \(error)")
+    }
+    
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    
+    // search
+    
+    let txtFieldSearch: UITextField = {
+        let tf=UITextField()
+        tf.borderStyle = .roundedRect
+        tf.backgroundColor = .white
+        tf.layer.borderColor = UIColor.darkGray.cgColor
+        tf.placeholder="Search for a location"
+        tf.translatesAutoresizingMaskIntoConstraints=false
+        return tf
+    }()
+    
+    func setupSearchField(){
+        self.view.addSubview(txtFieldSearch)
+        txtFieldSearch.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive=true
+        txtFieldSearch.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 10).isActive=true
+        txtFieldSearch.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -10).isActive=true
+        txtFieldSearch.heightAnchor.constraint(equalToConstant: 35).isActive=true
+        setupTextField(textField: txtFieldSearch, img: #imageLiteral(resourceName: "map_Pin"))
+    }
+    
+    func setupTextField(textField: UITextField, img: UIImage){
+        textField.leftViewMode = UITextFieldViewMode.always
+        let imageView = UIImageView(frame: CGRect(x: 5, y: 5, width: 20, height: 20))
+        imageView.image = img
+        let paddingView = UIView(frame:CGRect(x: 0, y: 0, width: 30, height: 30))
+        paddingView.addSubview(imageView)
+        textField.leftView = paddingView
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        let autoCompleteController = GMSAutocompleteViewController()
+        autoCompleteController.delegate = self
+        
+        let filter = GMSAutocompleteFilter()
+        autoCompleteController.autocompleteFilter = filter
+        
+        self.locationManager.startUpdatingLocation()
+        self.present(autoCompleteController, animated: true, completion: nil)
+        return false
     }
 
 }

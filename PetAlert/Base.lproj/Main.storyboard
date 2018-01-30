@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -382,21 +383,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="8yD-ls-lR5">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="8yD-ls-lR5">
                                 <rect key="frame" x="14" y="82" width="242" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="29" id="5i8-Jh-XgL"/>
-                                </constraints>
                                 <connections>
                                     <action selector="changedSlider:" destination="Q6g-jF-eQJ" eventType="valueChanged" id="INU-JY-Haa"/>
                                 </connections>
                             </slider>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xe6-E9-AGU" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="131" width="375" height="487"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xe6-E9-AGU" customClass="GMSMapView">
+                                <rect key="frame" x="0.0" y="111" width="375" height="507"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RaC-yT-dnM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RaC-yT-dnM">
                                 <rect key="frame" x="317" y="86" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="W2P-2M-lbZ"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -404,15 +405,19 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="8yD-ls-lR5" firstAttribute="top" secondItem="okD-dA-7Z8" secondAttribute="top" constant="15" id="0M8-sE-Ocf"/>
-                            <constraint firstItem="1vc-u3-978" firstAttribute="trailing" secondItem="RaC-yT-dnM" secondAttribute="trailing" constant="15" id="27O-si-G3H"/>
-                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="top" secondItem="8yD-ls-lR5" secondAttribute="bottom" constant="8" symbolic="YES" id="4j0-SI-IQm"/>
-                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="bottom" secondItem="1vc-u3-978" secondAttribute="bottom" id="GIo-lq-Mrh"/>
-                            <constraint firstItem="RaC-yT-dnM" firstAttribute="leading" secondItem="8yD-ls-lR5" secondAttribute="trailing" constant="60" id="IDW-9a-4hR"/>
-                            <constraint firstItem="8yD-ls-lR5" firstAttribute="leading" secondItem="1vc-u3-978" secondAttribute="leading" constant="20" id="TsO-AQ-Sfy"/>
-                            <constraint firstAttribute="trailing" secondItem="Xe6-E9-AGU" secondAttribute="trailing" id="f94-Wb-eRA"/>
-                            <constraint firstItem="RaC-yT-dnM" firstAttribute="top" secondItem="okD-dA-7Z8" secondAttribute="top" constant="15" id="nts-fW-JjG"/>
-                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="leading" secondItem="okD-dA-7Z8" secondAttribute="leading" id="paK-R6-vXn"/>
+                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="top" secondItem="8yD-ls-lR5" secondAttribute="bottom" id="6wY-C2-TAf"/>
+                            <constraint firstItem="8yD-ls-lR5" firstAttribute="centerY" secondItem="RaC-yT-dnM" secondAttribute="centerY" id="7aj-EL-Ra2"/>
+                            <constraint firstItem="8yD-ls-lR5" firstAttribute="top" secondItem="1vc-u3-978" secondAttribute="top" constant="18" id="EFE-Tc-eZ7"/>
+                            <constraint firstAttribute="trailing" secondItem="Xe6-E9-AGU" secondAttribute="trailing" id="G4T-LN-xif"/>
+                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="bottom" secondItem="1vc-u3-978" secondAttribute="bottom" id="Jbx-NH-mYo"/>
+                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="trailing" secondItem="1vc-u3-978" secondAttribute="trailing" id="Ocy-Do-egg"/>
+                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="bottom" secondItem="1vc-u3-978" secondAttribute="bottom" id="OfH-Il-E6i"/>
+                            <constraint firstItem="8yD-ls-lR5" firstAttribute="leading" secondItem="okD-dA-7Z8" secondAttribute="leadingMargin" id="Y6V-vw-ImF"/>
+                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="leading" secondItem="1vc-u3-978" secondAttribute="leading" id="cvm-BE-0Iy"/>
+                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="leading" secondItem="okD-dA-7Z8" secondAttribute="leading" id="fEg-2X-I7C"/>
+                            <constraint firstItem="RaC-yT-dnM" firstAttribute="leading" secondItem="8yD-ls-lR5" secondAttribute="trailing" constant="63" id="hPp-0g-tVA"/>
+                            <constraint firstItem="RaC-yT-dnM" firstAttribute="trailing" secondItem="okD-dA-7Z8" secondAttribute="trailingMargin" id="ubs-W0-qjX"/>
+                            <constraint firstItem="RaC-yT-dnM" firstAttribute="top" secondItem="1vc-u3-978" secondAttribute="top" constant="22" id="x9o-NP-0k3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1vc-u3-978"/>
                     </view>

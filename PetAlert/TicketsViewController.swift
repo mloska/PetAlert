@@ -13,7 +13,6 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
 
     var pets:[Pet]? = []
     var refreshControl: UIRefreshControl!
-    let managedContext = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     let loggedUserID = UserDefaults.standard.value(forKey: "logged_user_ID")
     // necessary for segue know if if spotted or found
     var buttonStatusTapped: String = ""
