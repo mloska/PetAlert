@@ -16,10 +16,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     @IBAction func changedSlider(_ sender: UISlider) {
         let currentValue = Int(sender.value)
         sliderValueLbl.text = "\(currentValue)"
-        let coordinateValues = locationManager.location?.coordinate
-        let radiusKM = currentValue
+        //let coordinateValues = locationManager.location?.coordinate
+        //let radiusKM = currentValue
         //mapView?.clear()
-        drawCircle(coordinate: (coordinateValues)!, radius: Double(radiusKM))
+        //drawCircle(coordinate: (coordinateValues)!, radius: Double(radiusKM))
         //reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusKM))
     }
     
@@ -27,7 +27,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     var URL_GET_PETS_RADIUS_STR = "https://serwer1878270.home.pl/WebService/api/getallpetsforselectedradius.php"
     var petsArrayMap:[Pet]? = []
     var locationManager = CLLocationManager()
-
+    let customMarkerWidth: Int = 50
+    let customMarkerHeight: Int = 70
+    var chosenMarkerID: Int = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeTheLocationManager()
@@ -38,10 +41,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         if (sliderValueLbl.text == "Label"){
             sliderValueLbl.text = "\(radiusKM)"
         }
-        //changedSlider(UISlider())
-        drawCircle(coordinate: (coordinateValues)!, radius: radiusKM)
         print("lat: ", coordinateValues?.latitude ?? 0)
         print("long: ", coordinateValues?.longitude ?? 0)
+        
+        customMarkerPreviewView=CustomMarkerPreviewView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width-100, height: 190))
+        drawCircle(coordinate: (coordinateValues)!, radius: radiusKM)
 
         //https:serwer1878270.home.pl/WebService/api/getallpetsforselectedradius.php?centerLatitude=50.020049&centerLongitude=19.906647&radiusKM=5
         reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: radiusKM)
@@ -78,13 +82,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         let camera = GMSCameraPosition.camera(withLatitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!, zoom: 10.0)
         let map = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
         
-        for pet in self.petsArrayMap! {
-            let marker = GMSMarker()
-            marker.position = CLLocationCoordinate2D(latitude: pet.Latitude, longitude: pet.Longitude)
-            marker.title = pet.Name
-            marker.snippet = "Hey, this is \(pet.Name ?? "")"
-            marker.map = self.mapView
-        }
+        showMarkers()
         
         self.mapView.settings.compassButton = true
         self.mapView.settings.myLocationButton = true
@@ -103,7 +101,66 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         locationManager.startUpdatingLocation()
     }
     
+    
+    // MARK: GOOGLE MAP DELEGATE
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        guard let customMarkerView = marker.iconView as? CustomMarkerView else { return false }
+        let img = customMarkerView.img!
+        let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: customMarkerWidth, height: customMarkerHeight), image: img, borderColor: UIColor.white, tag: customMarkerView.tag)
+        
+        marker.iconView = customMarker
+        
+        return false
+    }
+    
+    func mapView(_ mapView: GMSMapView, markerInfoContents marker: GMSMarker) -> UIView? {
+        guard let customMarkerView = marker.iconView as? CustomMarkerView else { return nil }
+        let data = self.petsArrayMap![customMarkerView.tag]
+        customMarkerPreviewView.setData(title: data.Name!, img: data.ImageData ?? UIImage(), breed: data.Breed!)
+        return customMarkerPreviewView
+    }
+    
+    func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
+        guard let customMarkerView = marker.iconView as? CustomMarkerView else { return }
+        chosenMarkerID = customMarkerView.tag
+        markerTapped(tag: chosenMarkerID)
+    }
+    
+    func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
+        guard let customMarkerView = marker.iconView as? CustomMarkerView else { return }
+        let img = customMarkerView.img!
+        let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: customMarkerWidth, height: customMarkerHeight), image: img, borderColor: UIColor.darkGray, tag: customMarkerView.tag)
+        marker.iconView = customMarker
+    }
+    
+    func showMarkers() {
+        //mapView.clear()
+        for (index, pet) in self.petsArrayMap!.enumerated() {
+            let marker=GMSMarker()
+            let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: customMarkerWidth, height: customMarkerHeight), image: pet.ImageData ?? UIImage(), borderColor: UIColor.darkGray, tag: index)
+            marker.iconView=customMarker
+            marker.position = CLLocationCoordinate2D(latitude: pet.Latitude, longitude: pet.Longitude)
+            marker.map = self.mapView
+        }
+    }
+    
+    @objc func markerTapped(tag: Int) {
+        self.performSegue(withIdentifier: "showTicketDetailsFromMarker", sender: self)
 
+    }
+    
+    var customMarkerPreviewView: CustomMarkerPreviewView = {
+        let v=CustomMarkerPreviewView()
+        return v
+    }()
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? DetailsTicketViewController {
+            let arrayIndex = chosenMarkerID
+            let petObject = petsArrayMap![arrayIndex]
+            destination.destPet = petObject
+        }
+    }
 
 }
 

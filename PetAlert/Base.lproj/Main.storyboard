@@ -366,7 +366,7 @@
                         <segue destination="Npc-Cw-kjA" kind="relationship" relationship="viewControllers" id="tjm-8q-oiw"/>
                         <segue destination="L8z-Vj-0Wt" kind="relationship" relationship="viewControllers" id="zbU-AQ-kSc"/>
                         <segue destination="Omm-JO-goz" kind="relationship" relationship="viewControllers" id="rPj-6D-VlJ"/>
-                        <segue destination="Q6g-jF-eQJ" kind="relationship" relationship="viewControllers" id="Yrk-or-7n9"/>
+                        <segue destination="AsT-2k-8C6" kind="relationship" relationship="viewControllers" id="Yrk-or-7n9"/>
                         <segue destination="guS-KI-pn4" kind="relationship" relationship="viewControllers" id="miX-ey-ypa"/>
                     </connections>
                 </tabBarController>
@@ -374,7 +374,7 @@
             </objects>
             <point key="canvasLocation" x="-837" y="113"/>
         </scene>
-        <!--Mapa-->
+        <!--Map View Controller-->
         <scene sceneID="GQx-Mr-ugo">
             <objects>
                 <viewController storyboardIdentifier="MapViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Q6g-jF-eQJ" customClass="MapViewController" customModule="PetAlert" customModuleProvider="target" sceneMemberID="viewController">
@@ -382,8 +382,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="8yD-ls-lR5">
-                                <rect key="frame" x="18" y="15" width="242" height="30"/>
+                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="8yD-ls-lR5">
+                                <rect key="frame" x="14" y="82" width="242" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="5i8-Jh-XgL"/>
                                 </constraints>
@@ -391,12 +391,12 @@
                                     <action selector="changedSlider:" destination="Q6g-jF-eQJ" eventType="valueChanged" id="INU-JY-Haa"/>
                                 </connections>
                             </slider>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xe6-E9-AGU" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="52" width="375" height="566"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xe6-E9-AGU" customClass="GMSMapView">
+                                <rect key="frame" x="0.0" y="131" width="375" height="487"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RaC-yT-dnM">
-                                <rect key="frame" x="318" y="15" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RaC-yT-dnM">
+                                <rect key="frame" x="317" y="86" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -416,15 +416,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1vc-u3-978"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Mapa" image="icon_map" selectedImage="icon_map" id="zrx-7u-5ew"/>
+                    <navigationItem key="navigationItem" id="EPc-5T-2vv"/>
                     <connections>
                         <outlet property="mapView" destination="Xe6-E9-AGU" id="Sj0-3A-VQ0"/>
                         <outlet property="sliderValueLbl" destination="RaC-yT-dnM" id="H6z-02-y88"/>
+                        <segue destination="BbH-XE-02X" kind="show" identifier="showTicketDetailsFromMarker" id="88x-jc-rHq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ymD-38-luW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="152.80000000000001" y="1881.4092953523241"/>
+            <point key="canvasLocation" x="949.60000000000002" y="1880.5097451274364"/>
         </scene>
         <!--Add Ticket View Controller-->
         <scene sceneID="KvA-zL-g1l">
@@ -739,6 +740,25 @@
             </objects>
             <point key="canvasLocation" x="116.8" y="-218.59070464767618"/>
         </scene>
+        <!--Mapa-->
+        <scene sceneID="mf5-V5-Zym">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AsT-2k-8C6" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Mapa" image="icon_map" selectedImage="icon_map" id="zrx-7u-5ew"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8kj-fb-F8t">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Q6g-jF-eQJ" kind="relationship" relationship="rootViewController" id="3hO-Jv-Rbj"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Q8N-0g-8Yd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="152" y="1880.9595202398802"/>
+        </scene>
     </scenes>
     <resources>
         <image name="10_beagle" width="1024" height="683"/>
@@ -751,6 +771,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5LE-X9-fvO"/>
-        <segue reference="srX-gp-H2E"/>
+        <segue reference="88x-jc-rHq"/>
     </inferredMetricsTieBreakers>
 </document>

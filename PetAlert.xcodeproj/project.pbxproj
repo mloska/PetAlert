@@ -19,6 +19,8 @@
 		494A239C200227AF00967826 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A239B200227AF00967826 /* MainTabController.swift */; };
 		494A23A0200231B300967826 /* AddTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A239F200231B300967826 /* AddTicketViewController.swift */; };
 		494A23A22002320800967826 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A23A12002320800967826 /* ProfileViewController.swift */; };
+		4973B3122020D507008C2787 /* CustomMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4973B3112020D507008C2787 /* CustomMarkerView.swift */; };
+		4973B3142020D56F008C2787 /* CustomMarkerPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4973B3132020D56F008C2787 /* CustomMarkerPreviewView.swift */; };
 		498525C2201DBA4A00956B0F /* ChangeStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498525C1201DBA4A00956B0F /* ChangeStatusViewController.swift */; };
 		498525C4201DD2D000956B0F /* GoogleMapsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498525C3201DD2D000956B0F /* GoogleMapsHelper.swift */; };
 		49C2CA0F20052D9B0071B894 /* DetailsTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2CA0E20052D9A0071B894 /* DetailsTicketViewController.swift */; };
@@ -45,6 +47,8 @@
 		494A239B200227AF00967826 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		494A239F200231B300967826 /* AddTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTicketViewController.swift; sourceTree = "<group>"; };
 		494A23A12002320800967826 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		4973B3112020D507008C2787 /* CustomMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerView.swift; sourceTree = "<group>"; };
+		4973B3132020D56F008C2787 /* CustomMarkerPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerPreviewView.swift; sourceTree = "<group>"; };
 		498525C1201DBA4A00956B0F /* ChangeStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeStatusViewController.swift; sourceTree = "<group>"; };
 		498525C3201DD2D000956B0F /* GoogleMapsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsHelper.swift; sourceTree = "<group>"; };
 		49C2CA0E20052D9A0071B894 /* DetailsTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTicketViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +112,8 @@
 				4913E5B42003FA1900C34C8A /* CustomTableViewCell.swift */,
 				49C2CA0E20052D9A0071B894 /* DetailsTicketViewController.swift */,
 				494A2399200206F300967826 /* MapViewController.swift */,
+				4973B3112020D507008C2787 /* CustomMarkerView.swift */,
+				4973B3132020D56F008C2787 /* CustomMarkerPreviewView.swift */,
 				494A23A12002320800967826 /* ProfileViewController.swift */,
 				494A236B2001318F00967826 /* PetModel.swift */,
 				49C68B3C200BEE1E00482C32 /* PetObject.swift */,
@@ -285,6 +291,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				494A23582001313B00967826 /* AppDelegate.swift in Sources */,
+				4973B3142020D56F008C2787 /* CustomMarkerPreviewView.swift in Sources */,
 				494A239C200227AF00967826 /* MainTabController.swift in Sources */,
 				494A235A2001313B00967826 /* LoginViewController.swift in Sources */,
 				849DC51920168342009B4054 /* PhotoViewCell.swift in Sources */,
@@ -295,6 +302,7 @@
 				49C2CA0F20052D9B0071B894 /* DetailsTicketViewController.swift in Sources */,
 				498525C2201DBA4A00956B0F /* ChangeStatusViewController.swift in Sources */,
 				49D236E220069DA4007801A0 /* CreateNewTicketViewController.swift in Sources */,
+				4973B3122020D507008C2787 /* CustomMarkerView.swift in Sources */,
 				8446069F2011485300AED470 /* PhotosViewController.swift in Sources */,
 				4913E5B52003FA1900C34C8A /* CustomTableViewCell.swift in Sources */,
 				494A239A200206F300967826 /* MapViewController.swift in Sources */,
