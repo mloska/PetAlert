@@ -31,7 +31,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     }
     
     //Web service url
-    var URL_GET_PETS_RADIUS_STR = "https://serwer1878270.home.pl/WebService/api/getallpetsforselectedradius.php"
+    let URL_GET_PETS_RADIUS_STR = "https://serwer1878270.home.pl/WebService/api/getallpetsforselectedradius.php"
     var petsArrayMap:[Pet]? = []
     var locationManager = CLLocationManager()
     let customMarkerWidth: Int = 50
@@ -39,7 +39,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     var chosenMarkerID: Int = 0
     var chosenPlace: MyPlace?
     let radiusKM:Double = 10
-
+    var drawLat: Double = 0.0
+    var drawLong: Double = 0.0
+    var drawRadiusKM: Double = 0.0
+    var sourceForMainMapFunction: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //initializeTheLocationManager()
@@ -60,14 +64,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         }
         
         customMarkerPreviewView=CustomMarkerPreviewView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width-100, height: 190))
-
+        sourceForMainMapFunction = "mainView"
         reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: radiusKM)
         
 
     }
     
     func initGoogleMaps(lat: Double, long: Double) {
-        let camera = GMSCameraPosition.camera(withLatitude: 28.7041, longitude: 77.1025, zoom: 10.0)
+        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 10.0)
         self.mapView.camera = camera
         self.mapView.delegate = self
         self.mapView.isMyLocationEnabled = true
@@ -88,27 +92,50 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     
     func reloadDataOnMap(lat: CLLocationDegrees, long: CLLocationDegrees, rad: Double){
         petsArrayMap = []
-        URL_GET_PETS_RADIUS_STR = "\(URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)"
-        print(URL_GET_PETS_RADIUS_STR)
-        connectToJson(link: URL_GET_PETS_RADIUS_STR, mainFunctionName: mainMapFunction)
-        drawCircle(coordinate: (CLLocationCoordinate2D(latitude: lat, longitude: long)), radius: radiusKM)
+        let url = "\(self.URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)"
+        print(url)
+        connectToJson(link: url, mainFunctionName: mainMapFunction)
+        //drawCircle(coordinate: (CLLocationCoordinate2D(latitude: lat, longitude: long)), radius: radiusKM)
+        drawLat = lat
+        drawLong = long
+        drawRadiusKM = radiusKM
     }
     
     func mainMapFunction (passedJsonArray: [[String: Any]]) {
         self.petsArrayMap = JsonToArray(inputJsonArray: passedJsonArray, downloadThumbnail: true)
         
-        let camera = GMSCameraPosition.camera(withLatitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!, zoom: 10.0)
-        //let map = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+        if (sourceForMainMapFunction == "mainView"){
+            
+            let camera = GMSCameraPosition.camera(withLatitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!, zoom: 10.0)
+            
+            //cannot set map cause search bar is lost on storyboard
+            //let map = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+            
+            showMarkers()
+            
+            self.mapView.settings.compassButton = true
+            self.mapView.settings.myLocationButton = true
+            self.mapView.settings.scrollGestures = true
+            self.mapView.settings.zoomGestures = true
+            
+            self.mapView.camera = camera;
+            //self.mapView = map
+        } else if (sourceForMainMapFunction == "afterSearchPlace"){
+            let camera = GMSCameraPosition.camera(withLatitude: drawLat, longitude: drawLong, zoom: 10.0)
+
+            showMarkers()
+
+            let marker=GMSMarker()
+            marker.position = CLLocationCoordinate2D(latitude: drawLat, longitude: drawLong)
+            marker.title = "\(chosenPlace?.name ?? "")"
+            marker.snippet = "\(txtFieldSearch.text!)"
+            marker.map = self.mapView
+            
+            self.mapView?.camera = camera
+            
+        }
         
-        showMarkers()
         
-        self.mapView.settings.compassButton = true
-        self.mapView.settings.myLocationButton = true
-        self.mapView.settings.scrollGestures = true
-        self.mapView.settings.zoomGestures = true
-        
-        self.mapView.camera = camera;
-        //self.mapView = map
     }
     
     func drawCircle (coordinate: CLLocationCoordinate2D, radius: Double){
@@ -161,7 +188,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     }
     
     func showMarkers() {
-        //self.mapView?.clear()
+        self.mapView?.clear()
         for (index, pet) in self.petsArrayMap!.enumerated() {
             let marker=GMSMarker()
             let customMarker = CustomMarkerView(frame: CGRect(x: 0, y: 0, width: customMarkerWidth, height: customMarkerHeight), image: pet.ImageData ?? UIImage(), borderColor: UIColor.darkGray, tag: index)
@@ -169,6 +196,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
             marker.position = CLLocationCoordinate2D(latitude: pet.Latitude, longitude: pet.Longitude)
             marker.map = self.mapView
         }
+        drawCircle(coordinate: (CLLocationCoordinate2D(latitude: drawLat, longitude: drawLong)), radius: drawRadiusKM)
     }
     
     @objc func markerTapped(tag: Int) {
@@ -200,22 +228,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         let long = place.coordinate.longitude
         let radiusKM:Double = 10
         print ("skonczylem szukanie ostatniej lokalizacji. Lat: ", lat, ", Long: ", long)
-        self.mapView.clear()
-        reloadDataOnMap(lat: lat, long: long, rad: radiusKM)
 
-        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 12.0)
-        self.mapView?.camera = camera
         txtFieldSearch.text=place.formattedAddress
         chosenPlace = MyPlace(name: place.formattedAddress!, lat: lat, long: long)
-        let marker=GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: lat, longitude: long)
-        marker.title = "\(place.name)"
-        marker.snippet = "\(place.formattedAddress!)"
-        marker.map = self.mapView
-        
-        drawCircle(coordinate: marker.position, radius: radiusKM)
 
-        
+        drawLat = lat
+        drawLong = long
+        drawRadiusKM = radiusKM
+      
+        sourceForMainMapFunction = "afterSearchPlace"
+        reloadDataOnMap(lat: lat, long: long, rad: radiusKM)
+
         self.dismiss(animated: true, completion: nil) // dismiss after place selected
     }
     
