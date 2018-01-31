@@ -19,16 +19,16 @@ struct MyPlace {
 class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, GMSAutocompleteViewControllerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var mapView: GMSMapView!
-    @IBOutlet weak var sliderValueLbl: UILabel!
-    @IBAction func changedSlider(_ sender: UISlider) {
-        let currentValue = Int(sender.value)
-        sliderValueLbl.text = "\(currentValue)"
-        //let coordinateValues = locationManager.location?.coordinate
-        //let radiusKM = currentValue
-        //mapView?.clear()
-        //drawCircle(coordinate: (coordinateValues)!, radius: Double(radiusKM))
-        //reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusKM))
-    }
+//    @IBOutlet weak var sliderValueLbl: UILabel!
+//    @IBAction func changedSlider(_ sender: UISlider) {
+//        let currentValue = Int(sender.value)
+//        sliderValueLbl.text = "\(currentValue)"
+//        //let coordinateValues = locationManager.location?.coordinate
+//        //let radiusKM = currentValue
+//        //mapView?.clear()
+//        //drawCircle(coordinate: (coordinateValues)!, radius: Double(radiusKM))
+//        //reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusKM))
+//    }
     
     //Web service url
     let URL_GET_PETS_RADIUS_STR = "https://serwer1878270.home.pl/WebService/api/getallpetsforselectedradius.php"
@@ -59,9 +59,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         setupSearchField()
         initGoogleMaps(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!)
         
-        if (sliderValueLbl.text == "Label"){
-            sliderValueLbl.text = "\(radiusKM)"
-        }
+//        if (sliderValueLbl.text == "Label"){
+//            sliderValueLbl.text = "\(radiusKM)"
+//        }
         
         customMarkerPreviewView=CustomMarkerPreviewView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width-100, height: 190))
         sourceForMainMapFunction = "mainView"

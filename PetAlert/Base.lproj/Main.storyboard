@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -383,48 +382,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="500" translatesAutoresizingMaskIntoConstraints="NO" id="8yD-ls-lR5">
-                                <rect key="frame" x="14" y="82" width="242" height="30"/>
-                                <connections>
-                                    <action selector="changedSlider:" destination="Q6g-jF-eQJ" eventType="valueChanged" id="INU-JY-Haa"/>
-                                </connections>
-                            </slider>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xe6-E9-AGU" customClass="GMSMapView">
-                                <rect key="frame" x="0.0" y="111" width="375" height="507"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RaC-yT-dnM">
-                                <rect key="frame" x="317" y="86" width="42" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="W2P-2M-lbZ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="top" secondItem="8yD-ls-lR5" secondAttribute="bottom" id="6wY-C2-TAf"/>
-                            <constraint firstItem="8yD-ls-lR5" firstAttribute="centerY" secondItem="RaC-yT-dnM" secondAttribute="centerY" id="7aj-EL-Ra2"/>
-                            <constraint firstItem="8yD-ls-lR5" firstAttribute="top" secondItem="1vc-u3-978" secondAttribute="top" constant="18" id="EFE-Tc-eZ7"/>
-                            <constraint firstAttribute="trailing" secondItem="Xe6-E9-AGU" secondAttribute="trailing" id="G4T-LN-xif"/>
-                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="bottom" secondItem="1vc-u3-978" secondAttribute="bottom" id="Jbx-NH-mYo"/>
-                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="trailing" secondItem="1vc-u3-978" secondAttribute="trailing" id="Ocy-Do-egg"/>
-                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="bottom" secondItem="1vc-u3-978" secondAttribute="bottom" id="OfH-Il-E6i"/>
-                            <constraint firstItem="8yD-ls-lR5" firstAttribute="leading" secondItem="okD-dA-7Z8" secondAttribute="leadingMargin" id="Y6V-vw-ImF"/>
-                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="leading" secondItem="1vc-u3-978" secondAttribute="leading" id="cvm-BE-0Iy"/>
-                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="leading" secondItem="okD-dA-7Z8" secondAttribute="leading" id="fEg-2X-I7C"/>
-                            <constraint firstItem="RaC-yT-dnM" firstAttribute="leading" secondItem="8yD-ls-lR5" secondAttribute="trailing" constant="63" id="hPp-0g-tVA"/>
-                            <constraint firstItem="RaC-yT-dnM" firstAttribute="trailing" secondItem="okD-dA-7Z8" secondAttribute="trailingMargin" id="ubs-W0-qjX"/>
-                            <constraint firstItem="RaC-yT-dnM" firstAttribute="top" secondItem="1vc-u3-978" secondAttribute="top" constant="22" id="x9o-NP-0k3"/>
+                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="top" secondItem="1vc-u3-978" secondAttribute="top" id="8eu-0d-cAo"/>
+                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="leading" secondItem="okD-dA-7Z8" secondAttribute="leading" id="LNe-x9-Bd6"/>
+                            <constraint firstItem="Xe6-E9-AGU" firstAttribute="bottom" secondItem="1vc-u3-978" secondAttribute="bottom" id="Oeu-TU-SEr"/>
+                            <constraint firstAttribute="trailing" secondItem="Xe6-E9-AGU" secondAttribute="trailing" id="YQG-mP-rqe"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1vc-u3-978"/>
                     </view>
-                    <navigationItem key="navigationItem" id="EPc-5T-2vv"/>
+                    <navigationItem key="navigationItem" id="EPc-5T-2vv">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="sliders_25" id="CaH-Sv-yMH"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="Xe6-E9-AGU" id="Sj0-3A-VQ0"/>
-                        <outlet property="sliderValueLbl" destination="RaC-yT-dnM" id="H6z-02-y88"/>
                         <segue destination="BbH-XE-02X" kind="show" identifier="showTicketDetailsFromMarker" id="88x-jc-rHq"/>
                     </connections>
                 </viewController>
@@ -773,6 +749,7 @@
         <image name="icon_plus" width="25" height="25"/>
         <image name="icon_ticket" width="25" height="25"/>
         <image name="icon_user" width="25" height="25"/>
+        <image name="sliders_25" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5LE-X9-fvO"/>
