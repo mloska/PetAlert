@@ -21,6 +21,8 @@
 		494A23A22002320800967826 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A23A12002320800967826 /* ProfileViewController.swift */; };
 		4973B3122020D507008C2787 /* CustomMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4973B3112020D507008C2787 /* CustomMarkerView.swift */; };
 		4973B3142020D56F008C2787 /* CustomMarkerPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4973B3132020D56F008C2787 /* CustomMarkerPreviewView.swift */; };
+		498304B920238EB100A62F09 /* PopoverFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498304B820238EB100A62F09 /* PopoverFilterViewController.swift */; };
+		498304BB20239B9C00A62F09 /* Shared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498304BA20239B9C00A62F09 /* Shared.swift */; };
 		498525C2201DBA4A00956B0F /* ChangeStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498525C1201DBA4A00956B0F /* ChangeStatusViewController.swift */; };
 		498525C4201DD2D000956B0F /* GoogleMapsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498525C3201DD2D000956B0F /* GoogleMapsHelper.swift */; };
 		49C2CA0F20052D9B0071B894 /* DetailsTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49C2CA0E20052D9A0071B894 /* DetailsTicketViewController.swift */; };
@@ -49,6 +51,8 @@
 		494A23A12002320800967826 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4973B3112020D507008C2787 /* CustomMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerView.swift; sourceTree = "<group>"; };
 		4973B3132020D56F008C2787 /* CustomMarkerPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerPreviewView.swift; sourceTree = "<group>"; };
+		498304B820238EB100A62F09 /* PopoverFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverFilterViewController.swift; sourceTree = "<group>"; };
+		498304BA20239B9C00A62F09 /* Shared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared.swift; sourceTree = "<group>"; };
 		498525C1201DBA4A00956B0F /* ChangeStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeStatusViewController.swift; sourceTree = "<group>"; };
 		498525C3201DD2D000956B0F /* GoogleMapsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapsHelper.swift; sourceTree = "<group>"; };
 		49C2CA0E20052D9A0071B894 /* DetailsTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTicketViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +104,8 @@
 				849DC51720168311009B4054 /* VIEW */,
 				494A23652001313B00967826 /* Info.plist */,
 				494A23622001313B00967826 /* Main.storyboard */,
+				498304BA20239B9C00A62F09 /* Shared.swift */,
+				498304B820238EB100A62F09 /* PopoverFilterViewController.swift */,
 				498525C1201DBA4A00956B0F /* ChangeStatusViewController.swift */,
 				498525C3201DD2D000956B0F /* GoogleMapsHelper.swift */,
 				494A23602001313B00967826 /* Assets.xcassets */,
@@ -290,6 +296,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				498304BB20239B9C00A62F09 /* Shared.swift in Sources */,
+				498304B920238EB100A62F09 /* PopoverFilterViewController.swift in Sources */,
 				494A23582001313B00967826 /* AppDelegate.swift in Sources */,
 				4973B3142020D56F008C2787 /* CustomMarkerPreviewView.swift in Sources */,
 				494A239C200227AF00967826 /* MainTabController.swift in Sources */,

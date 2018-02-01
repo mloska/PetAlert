@@ -16,19 +16,36 @@ struct MyPlace {
     var long: Double
 }
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, GMSAutocompleteViewControllerDelegate, UITextFieldDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, GMSAutocompleteViewControllerDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate {
 
     @IBOutlet weak var mapView: GMSMapView!
-//    @IBOutlet weak var sliderValueLbl: UILabel!
-//    @IBAction func changedSlider(_ sender: UISlider) {
-//        let currentValue = Int(sender.value)
-//        sliderValueLbl.text = "\(currentValue)"
-//        //let coordinateValues = locationManager.location?.coordinate
-//        //let radiusKM = currentValue
-//        //mapView?.clear()
-//        //drawCircle(coordinate: (coordinateValues)!, radius: Double(radiusKM))
-//        //reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusKM))
-//    }
+    
+    @IBAction func filterTapped(_ sender: Any) {
+        let vc = storyboard?.instantiateViewController(withIdentifier: "PopoverFilterViewController") as! PopoverFilterViewController
+        vc.preferredContentSize.width = UIScreen.main.bounds.width
+        vc.preferredContentSize.height = 150
+
+        let navController = UINavigationController(rootViewController: vc)
+        navController.modalPresentationStyle = UIModalPresentationStyle.popover
+        
+        let popover = navController.popoverPresentationController
+        popover?.delegate = self
+        popover?.barButtonItem = sender as? UIBarButtonItem
+        self.present(navController, animated: true, completion: nil)
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+    
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
+        let radiusSliderValue = Shared.shared.radiusValue
+        let coordinateValues = locationManager.location?.coordinate
+        radiusFromSlider = Shared.shared.radiusValue
+        sourceForMainMapFunction = "mainView"
+        reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusSliderValue))
+
+    }
     
     //Web service url
     let URL_GET_PETS_RADIUS_STR = "https://serwer1878270.home.pl/WebService/api/getallpetsforselectedradius.php"
@@ -38,10 +55,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     let customMarkerHeight: Int = 70
     var chosenMarkerID: Int = 0
     var chosenPlace: MyPlace?
-    let radiusKM:Double = 10
+    var radiusFromSlider:Int = 0
+
     var drawLat: Double = 0.0
     var drawLong: Double = 0.0
-    var drawRadiusKM: Double = 0.0
     var sourceForMainMapFunction: String = ""
     
     override func viewDidLoad() {
@@ -56,18 +73,16 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         locationManager.startMonitoringSignificantLocationChanges()
         let coordinateValues = locationManager.location?.coordinate
         
+        Shared.shared.radiusValue = 10
+        radiusFromSlider = Shared.shared.radiusValue
+        
         setupSearchField()
         initGoogleMaps(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!)
         
-//        if (sliderValueLbl.text == "Label"){
-//            sliderValueLbl.text = "\(radiusKM)"
-//        }
-        
         customMarkerPreviewView=CustomMarkerPreviewView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width-100, height: 190))
         sourceForMainMapFunction = "mainView"
-        reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: radiusKM)
-        
-
+        reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusFromSlider))
+ 
     }
     
     func initGoogleMaps(lat: Double, long: Double) {
@@ -95,10 +110,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         let url = "\(self.URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)"
         print(url)
         connectToJson(link: url, mainFunctionName: mainMapFunction)
-        //drawCircle(coordinate: (CLLocationCoordinate2D(latitude: lat, longitude: long)), radius: radiusKM)
         drawLat = lat
         drawLong = long
-        drawRadiusKM = radiusKM
     }
     
     func mainMapFunction (passedJsonArray: [[String: Any]]) {
@@ -132,14 +145,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
             marker.map = self.mapView
             
             self.mapView?.camera = camera
-            
         }
-        
-        
     }
     
     func drawCircle (coordinate: CLLocationCoordinate2D, radius: Double){
         let circle = GMSCircle()
+        //print("W drawCircle, radius =", radius)
         circle.radius = radius * 1000 // Meters
         circle.fillColor = UIColor(red: 0.09, green: 0.6, blue: 0.41, alpha: 0.5)
         circle.position = (coordinate) // Your CLLocationCoordinate2D  position
@@ -196,7 +207,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
             marker.position = CLLocationCoordinate2D(latitude: pet.Latitude, longitude: pet.Longitude)
             marker.map = self.mapView
         }
-        drawCircle(coordinate: (CLLocationCoordinate2D(latitude: drawLat, longitude: drawLong)), radius: drawRadiusKM)
+        drawCircle(coordinate: (CLLocationCoordinate2D(latitude: drawLat, longitude: drawLong)), radius: Double(radiusFromSlider))
     }
     
     @objc func markerTapped(tag: Int) {
@@ -226,7 +237,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         let lat = place.coordinate.latitude
         let long = place.coordinate.longitude
-        let radiusKM:Double = 10
         print ("skonczylem szukanie ostatniej lokalizacji. Lat: ", lat, ", Long: ", long)
 
         txtFieldSearch.text=place.formattedAddress
@@ -234,10 +244,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
 
         drawLat = lat
         drawLong = long
-        drawRadiusKM = radiusKM
       
         sourceForMainMapFunction = "afterSearchPlace"
-        reloadDataOnMap(lat: lat, long: long, rad: radiusKM)
+        reloadDataOnMap(lat: lat, long: long, rad: Double(radiusFromSlider))
 
         self.dismiss(animated: true, completion: nil) // dismiss after place selected
     }

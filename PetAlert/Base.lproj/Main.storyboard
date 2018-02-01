@@ -397,7 +397,11 @@
                         <viewLayoutGuide key="safeArea" id="1vc-u3-978"/>
                     </view>
                     <navigationItem key="navigationItem" id="EPc-5T-2vv">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="sliders_25" id="CaH-Sv-yMH"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="sliders_25" id="CaH-Sv-yMH">
+                            <connections>
+                                <action selector="filterTapped:" destination="Q6g-jF-eQJ" id="Dmi-cN-uq8"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="Xe6-E9-AGU" id="Sj0-3A-VQ0"/>
@@ -407,6 +411,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ymD-38-luW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="949.60000000000002" y="1880.5097451274364"/>
+        </scene>
+        <!--Popover Filter View Controller-->
+        <scene sceneID="Jx5-5Y-fA7">
+            <objects>
+                <viewController storyboardIdentifier="PopoverFilterViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Wnx-iF-21P" customClass="PopoverFilterViewController" customModule="PetAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CwH-il-mtc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="40" translatesAutoresizingMaskIntoConstraints="NO" id="PAC-gO-Arv">
+                                <rect key="frame" x="14" y="72" width="300" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="setSliderValueChanged:" destination="Wnx-iF-21P" eventType="valueChanged" id="aWX-nz-kMG"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="500" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yKo-sE-23V">
+                                <rect key="frame" x="315" y="76" width="44" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Set radius to search pets [km]" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MnC-Lv-UkZ">
+                                <rect key="frame" x="128" y="46" width="231" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="ccK-lz-Eko"/>
+                    </view>
+                    <connections>
+                        <outlet property="radiusLbl" destination="yKo-sE-23V" id="lOZ-bG-Th0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xcx-qw-e3c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1741.5999999999999" y="1882.3088455772115"/>
         </scene>
         <!--Add Ticket View Controller-->
         <scene sceneID="KvA-zL-g1l">
