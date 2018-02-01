@@ -42,6 +42,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         let radiusSliderValue = Shared.shared.radiusValue
         let coordinateValues = locationManager.location?.coordinate
         radiusFromSlider = Shared.shared.radiusValue
+        breedFromInput = Shared.shared.breedValue
+        print (breedFromInput)
         sourceForMainMapFunction = "mainView"
         reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusSliderValue))
 
@@ -56,10 +58,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     var chosenMarkerID: Int = 0
     var chosenPlace: MyPlace?
     var radiusFromSlider:Int = 0
-
+    var breedFromInput: String = ""
+    
     var drawLat: Double = 0.0
     var drawLong: Double = 0.0
     var sourceForMainMapFunction: String = ""
+    // don't fire viewWillAppear at first open
+    var firstLoad: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,13 +81,24 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         Shared.shared.radiusValue = 10
         radiusFromSlider = Shared.shared.radiusValue
         
+        Shared.shared.breedValue = ""
+        breedFromInput = Shared.shared.breedValue
+
         setupSearchField()
         initGoogleMaps(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!)
         
         customMarkerPreviewView=CustomMarkerPreviewView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width-100, height: 190))
         sourceForMainMapFunction = "mainView"
         reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusFromSlider))
- 
+        firstLoad = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if !firstLoad {
+            let coordinateValues = locationManager.location?.coordinate
+            reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusFromSlider))
+        }
+        firstLoad = false
     }
     
     func initGoogleMaps(lat: Double, long: Double) {
@@ -107,12 +123,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     
     func reloadDataOnMap(lat: CLLocationDegrees, long: CLLocationDegrees, rad: Double){
         petsArrayMap = []
-        let url = "\(self.URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)"
+        let url = "\(self.URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)" + "&breed=" + "\(breedFromInput)"
         print(url)
         connectToJson(link: url, mainFunctionName: mainMapFunction)
         drawLat = lat
         drawLong = long
     }
+    
+    
     
     func mainMapFunction (passedJsonArray: [[String: Any]]) {
         self.petsArrayMap = JsonToArray(inputJsonArray: passedJsonArray, downloadThumbnail: true)

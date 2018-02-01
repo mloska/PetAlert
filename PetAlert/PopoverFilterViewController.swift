@@ -17,11 +17,18 @@ class PopoverFilterViewController: UIViewController {
         Shared.shared.radiusValue = sliderValue
     }
     
+    @IBOutlet weak var breedInput: UITextField!
+    
+    @IBAction func breedInputAction(_ sender: UITextField) {
+        Shared.shared.breedValue = breedInput.text!
+    }
+    
     @IBOutlet weak var radiusLbl: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         radiusLbl.text = "\(Shared.shared.radiusValue)"
+        breedInput.text = "\(Shared.shared.breedValue)"
 
         // Do any additional setup after loading the view.
     }
