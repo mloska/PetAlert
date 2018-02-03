@@ -32,7 +32,6 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         print (URL_GET_PETS_STR + "\(loggedUserID ?? "-1")")
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.reloadData()
         
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(dismiss(fromGesture:)))
         tableView.addGestureRecognizer(gesture)
@@ -50,6 +49,11 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.pets = JsonToArray(inputJsonArray: passedJsonArray, downloadThumbnail: true)
 
         self.tableView.reloadData()
+        
+        DispatchQueue.main.async{
+            self.tableView.reloadData()
+        }
+
     }
     
     @objc func refresh(_ sender: Any) {

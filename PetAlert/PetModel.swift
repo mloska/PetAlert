@@ -91,10 +91,9 @@ func connectToJson(link: String, mainFunctionName: @escaping ([[String: Any]]) -
                     pets = (jsonResult["pets"] as? [[String: Any]])!
                     
                     DispatchQueue.main.sync(execute: {
-                        
                         mainFunctionName (pets)
-                        
                     })
+                    
                 } catch let error as NSError{
                     print(error)
                 }

@@ -27,8 +27,7 @@ class AddTicketViewController: UIViewController, UITableViewDataSource, UITableV
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.reloadData()
-        
+
         let gesture = UISwipeGestureRecognizer(target: self, action: #selector(dismiss(fromGesture:)))
         tableView.addGestureRecognizer(gesture)
         
@@ -44,6 +43,11 @@ class AddTicketViewController: UIViewController, UITableViewDataSource, UITableV
         self.petsArray = JsonToArray(inputJsonArray: passedJsonArray, downloadThumbnail: true)
 
         self.tableView.reloadData()
+        
+        DispatchQueue.main.async{
+            self.tableView.reloadData()
+        }
+        
     }
     
     @objc func refresh(_ sender: Any) {
