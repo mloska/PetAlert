@@ -248,7 +248,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" spellCheckingType="no" textContentType="name"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" textContentType="name"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AEH-Hu-ndH">
                                 <rect key="frame" x="153" y="565" width="69" height="30"/>
@@ -259,13 +259,6 @@
                                     <action selector="saveButtonTapped:" destination="Icp-SQ-V42" eventType="touchUpInside" id="1VU-KZ-Sp0"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter breed" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="8Ci-sp-gyz">
-                                <rect key="frame" x="201" y="114" width="158" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" spellCheckingType="no"/>
-                            </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter color" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lwK-3t-7iB">
                                 <rect key="frame" x="201" y="152" width="158" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -299,12 +292,22 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" spellCheckingType="no"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d1J-ha-pPV">
+                                <rect key="frame" x="201" y="114" width="158" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Select breed"/>
+                                <connections>
+                                    <segue destination="MgH-N0-Lny" kind="popoverPresentation" popoverAnchorView="d1J-ha-pPV" id="Q3K-va-j5w">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="k3m-Bk-LZs"/>
                     </view>
                     <connections>
-                        <outlet property="breedInput" destination="8Ci-sp-gyz" id="Xq1-uB-Tvv"/>
+                        <outlet property="breedInput" destination="d1J-ha-pPV" id="bgA-Xm-nvK"/>
                         <outlet property="colorInput" destination="lwK-3t-7iB" id="0OG-Yr-8Bf"/>
                         <outlet property="imageCtr" destination="fqT-Ea-FOW" id="SD8-cp-pGy"/>
                         <outlet property="lastSeenDateInput" destination="rAE-Cx-KSU" id="Hor-CP-gV2"/>
@@ -909,5 +912,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="5LE-X9-fvO"/>
         <segue reference="88x-jc-rHq"/>
+        <segue reference="Q3K-va-j5w"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -22,7 +22,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
     
     // inputs from storyboard
     @IBOutlet weak var nameInput: UITextField!
-    @IBOutlet weak var breedInput: UITextField!
+    @IBOutlet weak var breedInput: UIButton!
     @IBOutlet weak var colorInput: UITextField!
     @IBOutlet weak var imageCtr: UIImageView!
     
@@ -272,7 +272,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         
         //getting values from text fields
         let name = nameInput.text
-        let breed = breedInput.text
+        let breed = Shared.shared.breedChoice == "Select Breed" ? "" : Shared.shared.breedChoice
         let color = colorInput.text
         let city = self.city
         let street = self.street
@@ -309,7 +309,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         
         //creating the post parameter by concatenating the keys and values from text field
         var postParameters = "name="+name!
-        postParameters+="&breed="+breed!
+        postParameters+="&breed="+breed
         postParameters+="&color="+color!
         postParameters+="&city="+city
         postParameters+="&street="+street
@@ -390,26 +390,13 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         let alert = UIAlertController(title: "Saved", message: "Your ticket has been saved", preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//
-//            let vc = storyboard.instantiateViewController(withIdentifier: "NewView")
-//
-//            self.navigationController?.pushViewController(vc, animated: true)
 
-            
-            let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "TicketsViewController")
+            let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "TicketsViewController") as! TicketsViewController
             let navController = UINavigationController(rootViewController: VC1)
+            if let tabViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainTabController") as? MainTabController {
+                self.present(tabViewController, animated: true, completion: nil)
+            }
             self.present(navController, animated:true, completion: nil)
-
-//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//            let rootVC = storyboard.instantiateViewController(withIdentifier: "AddTicketViewController") as! UINavigationController
-//            let playVC = storyboard.instantiateViewController(withIdentifier: "TicketsViewController")
-//            window?.rootViewController?.presentViewController(rootVC, animated: true, completion: { () -> Void in
-//                rootVC.pushViewController(playVC, animated: true)
-//            })
-            
-            //let viewControllerYouWantToPresent = self.storyboard?.instantiateViewController(withIdentifier: "TicketsViewController")
-            //self.present(viewControllerYouWantToPresent!, animated: true, completion: nil)
         })
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
@@ -426,6 +413,14 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         createToolbar()
         initializeTheLocationManager()
         self.mapView.isMyLocationEnabled = true
+        
+        breedInput.backgroundColor = .clear
+        breedInput.layer.cornerRadius = 5
+        breedInput.layer.borderWidth = 0.5
+        breedInput.layer.borderColor = UIColor.lightGray.cgColor
+        
+        let label : String = Shared.shared.breedChoice
+        breedInput.setTitle(label, for: .normal)
     }
     
     
@@ -530,6 +525,11 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
         
         return body
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        let label : String = Shared.shared.breedChoice
+        breedInput.setTitle(label, for: .normal)
     }
 
 }

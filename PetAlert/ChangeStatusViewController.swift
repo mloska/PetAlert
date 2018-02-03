@@ -156,6 +156,9 @@ class ChangeStatusViewController: UIViewController, CLLocationManagerDelegate, G
         let okAction = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in
             let VC1 = self.storyboard!.instantiateViewController(withIdentifier: "TicketsViewController")
             let navController = UINavigationController(rootViewController: VC1)
+            if let tabViewController = self.storyboard?.instantiateViewController(withIdentifier: "MainTabController") as? MainTabController {
+                self.present(tabViewController, animated: true, completion: nil)
+            }
             self.present(navController, animated:true, completion: nil)
         })
         alert.addAction(okAction)
