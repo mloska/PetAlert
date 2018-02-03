@@ -109,7 +109,9 @@ func connectToJson(link: String, mainFunctionName: @escaping ([[String: Any]]) -
 func JsonToArray (inputJsonArray : [[String: Any]], downloadThumbnail: Bool) -> [Pet]{
     let URL_PHOTOS_MAIN_STR = "https://serwer1878270.home.pl/Images/User_"
     var petsArrayReturn:[Pet]? = []
-    
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+
     for pet in inputJsonArray {
         let petObject:Pet = Pet()
         
@@ -119,16 +121,16 @@ func JsonToArray (inputJsonArray : [[String: Any]], downloadThumbnail: Bool) -> 
         if let color = pet["Color"] as? String              {  petObject.Color = color  }
         if let city = pet["City"] as? String                {  petObject.City = city  }
         if let street = pet["Street"] as? String            {  petObject.Street = street  }
-        if let petType = pet["PetType"] as? String          {  petObject.PetType = petType  }
+        if let petType = pet["PetType"] as? Int             {  petObject.PetType = "\(petType)"  }
         if let description = pet["Description"] as? String  {  petObject.Description = description  }
         if let lastDate = pet["LastDate"] as? String        {  petObject.LastDate = lastDate  }
         if let longitude = pet["Longitude"] as? Double      {  petObject.Longitude = longitude  }
         if let latitude = pet["Latitude"] as? Double        {  petObject.Latitude = latitude  }
-        if let status = pet["Status"] as? String            {  petObject.Status = status  }
+        if let status = pet["Status"] as? Int               {  petObject.Status = "\(status)"  }
         if let image = pet["Image"] as? String              {  petObject.Image = image  }
         if let userID = pet["UserID"] as? Int               {  petObject.UserID = userID  }
         if let uuid = pet["UUID"] as? String                {  petObject.UUID = uuid  }
-        if let dateTimeModification = pet["DateTimeModification"] as? NSDate {  petObject.DateTimeModification = dateTimeModification  }
+        if let dateTimeModification = pet["DateTimeModification"] as? String {  petObject.DateTimeModification = dateFormatter.date(from:dateTimeModification)! as NSDate }
         
         if (petObject.Status == "1"){
             petObject.Status = "Searching"

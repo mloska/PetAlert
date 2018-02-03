@@ -81,19 +81,19 @@ class TicketsViewController: UIViewController, UITableViewDelegate, UITableViewD
         cell.cellSubtitle.text = "\(petObject.Street ?? ""), \(petObject.City ?? "")"
         cell.cellImage.image = petObject.ImageData
 
-        if (petObject.Status == "Searching") {
+        if (petObject.Status == "Searching") { 
             cell.cellView.backgroundColor = .green
-        }
-        else if (petObject.Status == "Found") {
-            cell.cellView.backgroundColor = .purple
-            cell.cellTitle.textColor = .red
-            cell.cellSubtitle.textColor = .red
         }
         else if (petObject.Status == "Spotted") {
             cell.cellView.backgroundColor = .orange
             cell.cellTitle.textColor = .black
             cell.cellSubtitle.textColor = .black
+        }else if (petObject.Status == "Found") {
+            cell.cellView.backgroundColor = .purple
+            cell.cellTitle.textColor = .red
+            cell.cellSubtitle.textColor = .red
         }
+        
         
         return cell
     }
