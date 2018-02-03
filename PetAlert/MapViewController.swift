@@ -40,13 +40,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     
     func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
         let radiusSliderValue = Shared.shared.radiusValue
-        let coordinateValues = locationManager.location?.coordinate
         radiusFromSlider = Shared.shared.radiusValue
         breedFromInput = Shared.shared.breedValue
         print (breedFromInput)
-        sourceForMainMapFunction = "mainView"
-        reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusSliderValue))
-
+//        sourceForMainMapFunction = "mainView"
+        print("Wywoluje reloadDataOnMap z popoverPresentationControllerDidDismissPopover place z lat = ", drawLat, ", long = ", drawLong)
+        reloadDataOnMap(lat: (drawLat), long: (drawLong), rad: Double(radiusSliderValue))
     }
     
     //Web service url
@@ -57,11 +56,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     let customMarkerHeight: Int = 70
     var chosenMarkerID: Int = 0
     var chosenPlace: MyPlace?
-    var radiusFromSlider:Int = 0
     var breedFromInput: String = ""
-    
     var drawLat: Double = 0.0
     var drawLong: Double = 0.0
+    var radiusFromSlider:Int = 0
     var sourceForMainMapFunction: String = ""
     // don't fire viewWillAppear at first open
     var firstLoad: Bool = true
@@ -78,6 +76,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         locationManager.startMonitoringSignificantLocationChanges()
         let coordinateValues = locationManager.location?.coordinate
         
+        drawLat = (coordinateValues?.latitude)!
+        drawLong = (coordinateValues?.longitude)!
+        
         Shared.shared.radiusValue = 10
         radiusFromSlider = Shared.shared.radiusValue
         
@@ -85,18 +86,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         breedFromInput = Shared.shared.breedValue
 
         setupSearchField()
-        initGoogleMaps(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!)
+        initGoogleMaps(lat: (drawLat), long: (drawLong))
         
         customMarkerPreviewView=CustomMarkerPreviewView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width-100, height: 190))
         sourceForMainMapFunction = "mainView"
-        reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusFromSlider))
+        print("Wywoluje reloadDataOnMap z viewDidLoad place z lat = ", drawLat, ", long = ", drawLong)
+        reloadDataOnMap(lat: (drawLat), long: (drawLong), rad: Double(radiusFromSlider))
         firstLoad = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         if !firstLoad {
-            let coordinateValues = locationManager.location?.coordinate
-            reloadDataOnMap(lat: (coordinateValues?.latitude)!, long: (coordinateValues?.longitude)!, rad: Double(radiusFromSlider))
+            print("Wywoluje reloadDataOnMap z viewWillAppear z lat = ", drawLat, ", long = ", drawLong)
+            reloadDataOnMap(lat: (drawLat), long: (drawLong), rad: Double(radiusFromSlider))
         }
         firstLoad = false
     }
@@ -123,11 +125,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     
     func reloadDataOnMap(lat: CLLocationDegrees, long: CLLocationDegrees, rad: Double){
         petsArrayMap = []
-        let url = "\(self.URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)" + "&breed=" + "\(breedFromInput)"
-        print(url)
-        connectToJson(link: url, mainFunctionName: mainMapFunction)
         drawLat = lat
         drawLong = long
+        
+        let url = "\(self.URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)" + "&breed=" + "\(breedFromInput)"
+        print("reloadDataOnMap: ", url)
+        connectToJson(link: url, mainFunctionName: mainMapFunction)
+        
     }
     
     
@@ -137,7 +141,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         
         if (sourceForMainMapFunction == "mainView"){
             
-            let camera = GMSCameraPosition.camera(withLatitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!, zoom: 10.0)
+            let camera = GMSCameraPosition.camera(withLatitude: (drawLat), longitude: (drawLong), zoom: 10.0)
             
             //cannot set map cause search bar is lost on storyboard
             //let map = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
@@ -156,11 +160,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
 
             showMarkers()
 
-            let marker=GMSMarker()
-            marker.position = CLLocationCoordinate2D(latitude: drawLat, longitude: drawLong)
-            marker.title = "\(chosenPlace?.name ?? "")"
-            marker.snippet = "\(txtFieldSearch.text!)"
-            marker.map = self.mapView
+            drawMarker()
             
             self.mapView?.camera = camera
         }
@@ -175,6 +175,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         circle.strokeWidth = 1;
         circle.strokeColor = UIColor.black
         circle.map = mapView; // Add it to the map
+    }
+    
+    func drawMarker(){
+        let marker=GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: drawLat, longitude: drawLong)
+        marker.title = "\(chosenPlace?.name ?? "")"
+        marker.snippet = "\(txtFieldSearch.text!)"
+        marker.map = self.mapView
     }
     
     func initializeTheLocationManager()
@@ -255,16 +263,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         let lat = place.coordinate.latitude
         let long = place.coordinate.longitude
+        drawLat = lat
+        drawLong = long
         print ("skonczylem szukanie ostatniej lokalizacji. Lat: ", lat, ", Long: ", long)
 
         txtFieldSearch.text=place.formattedAddress
         chosenPlace = MyPlace(name: place.formattedAddress!, lat: lat, long: long)
 
-        drawLat = lat
-        drawLong = long
-      
         sourceForMainMapFunction = "afterSearchPlace"
-        reloadDataOnMap(lat: lat, long: long, rad: Double(radiusFromSlider))
+        // nie trzeba wywoływać tutaj reloadDataOnMap, bo znikniecie okna z wyborem nowej lokalizacji z wyszukiwarki spowoduje wywowlanie reloadmapy z onViewWillAppear
+        //print("Wywoluje reloadDataOnMap z didAutocompleteWith place z lat = ", drawLat, ", long = ", drawLong)
+        //reloadDataOnMap(lat: lat, long: long, rad: Double(radiusFromSlider))
 
         self.dismiss(animated: true, completion: nil) // dismiss after place selected
     }
