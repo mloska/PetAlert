@@ -16,6 +16,7 @@ struct MyPlace {
     var long: Double
 }
 
+
 class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapViewDelegate, GMSAutocompleteViewControllerDelegate, UITextFieldDelegate, UIPopoverPresentationControllerDelegate {
 
     @IBOutlet weak var mapView: GMSMapView!
@@ -23,7 +24,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     @IBAction func filterTapped(_ sender: Any) {
         let vc = storyboard?.instantiateViewController(withIdentifier: "PopoverFilterViewController") as! PopoverFilterViewController
         vc.preferredContentSize.width = UIScreen.main.bounds.width
-        vc.preferredContentSize.height = 150
+        vc.preferredContentSize.height = 180
 
         let navController = UINavigationController(rootViewController: vc)
         navController.modalPresentationStyle = UIModalPresentationStyle.popover
@@ -41,7 +42,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
         let radiusSliderValue = Shared.shared.radiusValue
         radiusFromSlider = Shared.shared.radiusValue
-        breedFromInput = Shared.shared.breedValue
+        breedFromInput = Shared.shared.breedChoice == "Select Breed" ? "" : Shared.shared.breedChoice
+
         print (breedFromInput)
 //        sourceForMainMapFunction = "mainView"
         print("Wywoluje reloadDataOnMap z popoverPresentationControllerDidDismissPopover place z lat = ", drawLat, ", long = ", drawLong)
@@ -82,8 +84,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         Shared.shared.radiusValue = 10
         radiusFromSlider = Shared.shared.radiusValue
         
-        Shared.shared.breedValue = ""
-        breedFromInput = Shared.shared.breedValue
+        breedFromInput = Shared.shared.breedChoice == "Select Breed" ? "" : Shared.shared.breedChoice
 
         setupSearchField()
         initGoogleMaps(lat: (drawLat), long: (drawLong))
@@ -128,7 +129,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         drawLat = lat
         drawLong = long
         
-        let url = "\(self.URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)" + "&breed=" + "\(breedFromInput)"
+        let url = "\(self.URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)" + "&breed=" + "\(breedFromInput.replacingOccurrences(of: " ", with: "") )"
         print("reloadDataOnMap: ", url)
         connectToJson(link: url, mainFunctionName: mainMapFunction)
         

@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -448,28 +449,119 @@
                                 <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="Sg4-YO-Pjn">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I7l-G3-I3Q">
                                 <rect key="frame" x="158" y="138" width="201" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" spellCheckingType="no"/>
+                                <state key="normal" title="Select breed"/>
                                 <connections>
-                                    <action selector="breedInputAction:" destination="Wnx-iF-21P" eventType="editingDidEnd" id="njQ-hC-bSZ"/>
+                                    <segue destination="MgH-N0-Lny" kind="popoverPresentation" popoverAnchorView="I7l-G3-I3Q" id="3ds-4t-NGl">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
                                 </connections>
-                            </textField>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="ccK-lz-Eko"/>
                     </view>
                     <connections>
-                        <outlet property="breedInput" destination="Sg4-YO-Pjn" id="JgU-eV-7Mu"/>
+                        <outlet property="btnBreed" destination="I7l-G3-I3Q" id="GU0-DV-NQ6"/>
                         <outlet property="radiusLbl" destination="yKo-sE-23V" id="lOZ-bG-Th0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xcx-qw-e3c" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1741.5999999999999" y="1882.3088455772115"/>
+        </scene>
+        <!--Choose Breed View Controller-->
+        <scene sceneID="w85-hn-Aqy">
+            <objects>
+                <viewController storyboardIdentifier="ChooseBreedViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="MgH-N0-Lny" customClass="ChooseBreedViewController" customModule="PetAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="yJH-on-z9A">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FwH-WX-BrR">
+                                <rect key="frame" x="16" y="48" width="343" height="599"/>
+                                <subviews>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="eqV-c6-Rd1">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="553"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <prototypes>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="breedCell" id="oe2-5U-e5q" customClass="CustomBreedTableViewCell" customModule="PetAlert" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="343" height="44"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oe2-5U-e5q" id="i2G-9W-rI3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="343" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="x4S-g8-d9k">
+                                                            <rect key="frame" x="6" y="5" width="330" height="33"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <subviews>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="10_beagle" translatesAutoresizingMaskIntoConstraints="NO" id="Z47-wA-i7z">
+                                                                    <rect key="frame" x="7" y="-305.5" width="40" height="683"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="40" id="Tvx-PJ-72D"/>
+                                                                        <constraint firstAttribute="width" constant="40" id="hb1-8A-hyw"/>
+                                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="40" id="oNF-bo-gZw"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                            </subviews>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v8x-fM-SlR">
+                                                            <rect key="frame" x="83" y="7" width="260" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="breedImage" destination="Z47-wA-i7z" id="WYa-1M-LpF"/>
+                                                    <outlet property="breedNameLabel" destination="v8x-fM-SlR" id="uc4-e6-QxC"/>
+                                                    <outlet property="breedView" destination="x4S-g8-d9k" id="eCo-xq-eXN"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                    </tableView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HSm-Ll-ei4">
+                                        <rect key="frame" x="147" y="561" width="48" height="30"/>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelTapped:" destination="MgH-N0-Lny" eventType="touchUpInside" id="mZx-1d-1lN"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="eqV-c6-Rd1" firstAttribute="centerX" secondItem="HSm-Ll-ei4" secondAttribute="centerX" id="6ec-rg-jaW"/>
+                                    <constraint firstItem="HSm-Ll-ei4" firstAttribute="bottom" secondItem="FwH-WX-BrR" secondAttribute="bottomMargin" id="E4T-Hr-3F0"/>
+                                    <constraint firstItem="eqV-c6-Rd1" firstAttribute="leading" secondItem="FwH-WX-BrR" secondAttribute="leading" id="Xrp-8k-vDk"/>
+                                    <constraint firstItem="eqV-c6-Rd1" firstAttribute="top" secondItem="FwH-WX-BrR" secondAttribute="top" id="dzR-zy-vsH"/>
+                                    <constraint firstAttribute="trailing" secondItem="eqV-c6-Rd1" secondAttribute="trailing" id="zUf-96-z7G"/>
+                                    <constraint firstItem="HSm-Ll-ei4" firstAttribute="top" secondItem="eqV-c6-Rd1" secondAttribute="bottom" constant="8" symbolic="YES" id="ziS-pZ-Pff"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="FwH-WX-BrR" firstAttribute="top" secondItem="Fop-Eq-vdh" secondAttribute="top" constant="28" id="NRH-yr-BJa"/>
+                            <constraint firstItem="FwH-WX-BrR" firstAttribute="trailing" secondItem="yJH-on-z9A" secondAttribute="trailingMargin" id="YoF-Zn-h6m"/>
+                            <constraint firstAttribute="bottom" secondItem="FwH-WX-BrR" secondAttribute="bottom" constant="20" symbolic="YES" id="fkT-wR-br3"/>
+                            <constraint firstItem="FwH-WX-BrR" firstAttribute="leading" secondItem="yJH-on-z9A" secondAttribute="leadingMargin" id="kV9-rv-TuM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Fop-Eq-vdh"/>
+                    </view>
+                    <connections>
+                        <outlet property="breedView" destination="FwH-WX-BrR" id="Wku-bw-TDf"/>
+                        <outlet property="tableView" destination="eqV-c6-Rd1" id="apZ-el-RZ4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="36x-ls-Tfb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2509.5999999999999" y="1882.3088455772115"/>
         </scene>
         <!--Add Ticket View Controller-->
         <scene sceneID="KvA-zL-g1l">

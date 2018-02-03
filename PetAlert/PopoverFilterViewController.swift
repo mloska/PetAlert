@@ -10,6 +10,9 @@ import UIKit
 
 class PopoverFilterViewController: UIViewController {
 
+    @IBOutlet weak var btnBreed: UIButton!
+    
+    
     @IBAction func setSliderValueChanged(_ sender: UISlider) {
         let sliderValue = Int(sender.value)
 //        print ("ValueChanged", sliderValue)
@@ -17,19 +20,22 @@ class PopoverFilterViewController: UIViewController {
         Shared.shared.radiusValue = sliderValue
     }
     
-    @IBOutlet weak var breedInput: UITextField!
-    
-    @IBAction func breedInputAction(_ sender: UITextField) {
-        Shared.shared.breedValue = breedInput.text!
-    }
     
     @IBOutlet weak var radiusLbl: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         radiusLbl.text = "\(Shared.shared.radiusValue)"
-        breedInput.text = "\(Shared.shared.breedValue)"
 
+        btnBreed.backgroundColor = .clear
+        btnBreed.layer.cornerRadius = 5
+        btnBreed.layer.borderWidth = 0.5
+        btnBreed.layer.borderColor = UIColor.lightGray.cgColor
+        
+        let label : String = Shared.shared.breedChoice
+        btnBreed.setTitle(label, for: .normal)
+
+        
         // Do any additional setup after loading the view.
     }
 
@@ -38,15 +44,10 @@ class PopoverFilterViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        let label : String = Shared.shared.breedChoice
+        btnBreed.setTitle(label, for: .normal)
     }
-    */
+
 
 }

@@ -11,5 +11,5 @@ import Foundation
 final class Shared {
     static let shared = Shared()
     var radiusValue: Int = 0
-    var breedValue: String = ""
+    var breedChoice: String = "Select Breed"
 }

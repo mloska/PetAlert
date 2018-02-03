@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2631C6EA57944084F1329E5C /* Pods_PetAlert.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539AF1AC130230966429BFAD /* Pods_PetAlert.framework */; };
 		4913E5B52003FA1900C34C8A /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4913E5B42003FA1900C34C8A /* CustomTableViewCell.swift */; };
+		4923D76D202600EE0002C8E9 /* ChooseBreedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4923D76C202600EE0002C8E9 /* ChooseBreedViewController.swift */; };
+		4923D76F202603DE0002C8E9 /* CustomBreedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4923D76E202603DE0002C8E9 /* CustomBreedTableViewCell.swift */; };
 		494A23582001313B00967826 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A23572001313B00967826 /* AppDelegate.swift */; };
 		494A235A2001313B00967826 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A23592001313B00967826 /* LoginViewController.swift */; };
 		494A235C2001313B00967826 /* TicketsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A235B2001313B00967826 /* TicketsViewController.swift */; };
@@ -37,6 +39,8 @@
 /* Begin PBXFileReference section */
 		3E18F86B55E860B4BD8D6E98 /* Pods-PetAlert.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetAlert.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PetAlert/Pods-PetAlert.debug.xcconfig"; sourceTree = "<group>"; };
 		4913E5B42003FA1900C34C8A /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		4923D76C202600EE0002C8E9 /* ChooseBreedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseBreedViewController.swift; sourceTree = "<group>"; };
+		4923D76E202603DE0002C8E9 /* CustomBreedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBreedTableViewCell.swift; sourceTree = "<group>"; };
 		494A23542001313B00967826 /* PetAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		494A23572001313B00967826 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		494A23592001313B00967826 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -104,6 +108,7 @@
 				849DC51720168311009B4054 /* VIEW */,
 				494A23652001313B00967826 /* Info.plist */,
 				494A23622001313B00967826 /* Main.storyboard */,
+				4923D76C202600EE0002C8E9 /* ChooseBreedViewController.swift */,
 				498304BA20239B9C00A62F09 /* Shared.swift */,
 				498304B820238EB100A62F09 /* PopoverFilterViewController.swift */,
 				498525C1201DBA4A00956B0F /* ChangeStatusViewController.swift */,
@@ -116,6 +121,7 @@
 				49D236E120069DA4007801A0 /* CreateNewTicketViewController.swift */,
 				494A239F200231B300967826 /* AddTicketViewController.swift */,
 				4913E5B42003FA1900C34C8A /* CustomTableViewCell.swift */,
+				4923D76E202603DE0002C8E9 /* CustomBreedTableViewCell.swift */,
 				49C2CA0E20052D9A0071B894 /* DetailsTicketViewController.swift */,
 				494A2399200206F300967826 /* MapViewController.swift */,
 				4973B3112020D507008C2787 /* CustomMarkerView.swift */,
@@ -302,6 +308,7 @@
 				4973B3142020D56F008C2787 /* CustomMarkerPreviewView.swift in Sources */,
 				494A239C200227AF00967826 /* MainTabController.swift in Sources */,
 				494A235A2001313B00967826 /* LoginViewController.swift in Sources */,
+				4923D76D202600EE0002C8E9 /* ChooseBreedViewController.swift in Sources */,
 				849DC51920168342009B4054 /* PhotoViewCell.swift in Sources */,
 				498525C4201DD2D000956B0F /* GoogleMapsHelper.swift in Sources */,
 				49C68B3D200BEE1E00482C32 /* PetObject.swift in Sources */,
@@ -313,6 +320,7 @@
 				4973B3122020D507008C2787 /* CustomMarkerView.swift in Sources */,
 				8446069F2011485300AED470 /* PhotosViewController.swift in Sources */,
 				4913E5B52003FA1900C34C8A /* CustomTableViewCell.swift in Sources */,
+				4923D76F202603DE0002C8E9 /* CustomBreedTableViewCell.swift in Sources */,
 				494A239A200206F300967826 /* MapViewController.swift in Sources */,
 				494A23A22002320800967826 /* ProfileViewController.swift in Sources */,
 				494A236C2001318F00967826 /* PetModel.swift in Sources */,
