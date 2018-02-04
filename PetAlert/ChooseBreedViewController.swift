@@ -37,77 +37,6 @@ class ChooseBreedViewController: UIViewController, UITableViewDelegate, UITableV
     
     var allBreeds = [Breed]()
     var searchedBreeds = [Breed]()
-
-    var allBreeds2 = [
-                     "Barbet",
-                     "Basenji",
-                     "Basset",
-                     "Basset artezyjsko-normandzki",
-                     "Basset bretoński",
-                     "Basset gaskoński",
-                     "Beagle",
-                     "Beagle harrier",
-                     "Bearded collie",
-                     "Bedlington terier",
-                     "Bernardyn długowłosy",
-                     "Bernardyn krótkowłosy",
-                     "Berneński pies pasterski",
-                     "Biały owczarek szwajcarski",
-                     "Biewer Yorkshire Terrier",
-                     "Bichon frise",
-                     "Black and tan Coonhound",
-                     "Bloodhound",
-                     "Bluetick Coonhound",
-                     "Boerboel",
-                     "Bokser",
-                     "Bolończyk",
-                     "Border collie",
-                     "Border terrier",
-                     "Boston terier",
-                     "Bouvier des Ardennes",
-                     "Bouvier des Flandres",
-                     "Boykin spaniel",
-                     "Brabantczyk",
-                     "Braque d'Auvergne",
-                     "Braque du Bourbonnais",
-                     "Braque Saint-Germain",
-                     "Briquet Griffon Vendéen",
-                     "Broholmer",
-                     "Buhund norweski",
-                     "Buldog amerykański",
-                     "Buldog angielski",
-                     "Buldog francuski",
-                     "Bully Kutta",
-                     "Bulmastif",
-                     "Bulterier",
-                     "Bulterier miniaturowy"]
-    
-    
-    func sampleData(){
-        allBreeds.append(Breed(name: "Affenpinscher", subName: "Pinczer małpi", image: UIImage()))
-        allBreeds.append(Breed(name: "Aidi", subName: "Owczarek z Gór Atlas", image: UIImage()))
-        allBreeds.append(Breed(name: "Airedale terrier", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Akbash dog", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Akita", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Akita amerykańska", subName: "Duży japoński pies", image: UIImage()))
-        allBreeds.append(Breed(name: "Alano español", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Alaskan husky", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Alaskan klee kai", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Alaskan malamute", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Alpejski gończy krótkonożny", subName: "Alpine Dachsbracke", image: UIImage()))
-        allBreeds.append(Breed(name: "Amerykański pies eskimoski", subName: "American eskimo dog", image: UIImage()))
-        allBreeds.append(Breed(name: "Amerykański pitbulterier", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Amerykański spaniel dowodny", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Amerykański staffordshire terier", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Alaskan malamute", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Anatolian", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Angielski Coonhound", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Appenzeller", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Ariégeois", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Australian Cattle Dog", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Australian stumpy tail cattle dog", subName: "", image: UIImage()))
-        allBreeds.append(Breed(name: "Australijski silky terier", subName: "", image: UIImage()))
-    }
     
     let URL_GET_BREEDS_STR = "https://serwer1878270.home.pl/WebService/api/getallbreeds.php"
 
@@ -145,6 +74,7 @@ class ChooseBreedViewController: UIViewController, UITableViewDelegate, UITableV
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         Shared.shared.breedChoice = searchedBreeds[indexPath.row].name!
+        Shared.shared.breedChoiceID = searchedBreeds[indexPath.row].ID!
         dismiss(animated: true, completion: nil)
     }
 

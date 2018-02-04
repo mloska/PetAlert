@@ -12,4 +12,6 @@ final class Shared {
     static let shared = Shared()
     var radiusValue: Int = 0
     var breedChoice: String = "Select Breed"
+    var breedChoiceID: Int = 0
+
 }

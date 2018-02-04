@@ -129,7 +129,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         drawLat = lat
         drawLong = long
         
-        let url = "\(self.URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)" + "&breed=" + "\(breedFromInput.replacingOccurrences(of: " ", with: "") )"
+        let url = "\(self.URL_GET_PETS_RADIUS_STR)" + "?centerLatitude=" + "\(lat)" + "&centerLongitude=" + "\(long)" + "&radiusKM=" + "\(rad)" + "&breed=" + "\(Shared.shared.breedChoiceID)"
         print("reloadDataOnMap: ", url)
         connectToJson(link: url, mainFunctionName: mainMapFunction)
         

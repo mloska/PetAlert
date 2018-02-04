@@ -272,7 +272,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         
         //getting values from text fields
         let name = nameInput.text
-        let breed = Shared.shared.breedChoice == "Select Breed" ? "" : Shared.shared.breedChoice
+        let breed = Shared.shared.breedChoiceID
         let color = colorInput.text
         let city = self.city
         let street = self.street
@@ -309,7 +309,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         
         //creating the post parameter by concatenating the keys and values from text field
         var postParameters = "name="+name!
-        postParameters+="&breed="+breed
+        postParameters+="&breed="+"\(breed)"
         postParameters+="&color="+color!
         postParameters+="&city="+city
         postParameters+="&street="+street
