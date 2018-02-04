@@ -12,6 +12,7 @@ class CustomBreedTableViewCell: UITableViewCell {
     
     
     @IBOutlet weak var breedNameLabel: UILabel!
+    @IBOutlet weak var breedSubname: UILabel!
     @IBOutlet weak var breedImage: UIImageView!
     @IBOutlet weak var breedView: UIView!
     

@@ -71,8 +71,9 @@ class Pet : NSObject{
 }
 
 
+
 // establish connection for passing webservice link, pass function that need to be fired in the main thread
-func connectToJson(link: String, mainFunctionName: @escaping ([[String: Any]]) -> Void){
+func connectToJson(link: String, jsonTitle: String = "pets", mainFunctionName: @escaping ([[String: Any]]) -> Void){
     let url = URL(string: link)!
     var request = URLRequest(url:url)
     request.httpMethod = "GET"
@@ -88,7 +89,7 @@ func connectToJson(link: String, mainFunctionName: @escaping ([[String: Any]]) -
             if data != nil{
                 do {
                     jsonResult = try JSONSerialization.jsonObject(with: data!, options:.mutableContainers) as! [String : Any]
-                    pets = (jsonResult["pets"] as? [[String: Any]])!
+                    pets = (jsonResult[jsonTitle] as? [[String: Any]])!
                     
                     DispatchQueue.main.sync(execute: {
                         mainFunctionName (pets)
@@ -160,11 +161,38 @@ func JsonToArray (inputJsonArray : [[String: Any]], downloadThumbnail: Bool) -> 
     return petsArrayReturn!
 }
 
+// chop Json array into single objects
+func JsonBreedToArray (inputJsonArray : [[String: Any]], downloadThumbnail: Bool) -> [ChooseBreedViewController.Breed]{
+    let URL_PHOTOS_MAIN_STR = "https://serwer1878270.home.pl/Images/Breeds/"
+    var breedsArrayReturn:[ChooseBreedViewController.Breed]? = []
+    
+    for breed in inputJsonArray {
+        let breedObject:ChooseBreedViewController.Breed = ChooseBreedViewController.Breed()
+        
+        if let id = breed["ID"] as? Int                       {  breedObject.ID = id  }
+        if let name = breed["Name"] as? String                {  breedObject.name = name  }
+        if let breed = breed["Subname"] as? String            {  breedObject.subName = breed  }
+        
+        let imgURL = "\(URL_PHOTOS_MAIN_STR)" + "\(breedObject.ID ?? 0)" + ".jpg"
+        
+        let url = URL(string:imgURL)
+        if let data = try? Data(contentsOf: url!)
+        {
+            breedObject.image = UIImage(data: data)!
+        }
+        
+        breedsArrayReturn?.append(breedObject)
+    }
+    
+    return breedsArrayReturn!
+}
 
 
 
 enum petStatuses : Int {
-    case Searching = 1, Spotted = 2, Found = 3
+    case Searching = 1
+    case Spotted = 2
+    case Found = 3
 }
 
 let a: petStatuses? = petStatuses(rawValue: 2) // Spotted

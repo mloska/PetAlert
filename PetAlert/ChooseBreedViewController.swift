@@ -8,9 +8,26 @@
 
 import UIKit
 
-class ChooseBreedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ChooseBreedViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
+    class Breed {
+        var ID: Int?
+        var name: String?
+        var subName: String?
+        var image: UIImage?
+        
+        init(ID: Int? = 0, name: String? = nil, subName: String? = nil, image: UIImage? = UIImage()) {
+            self.ID = ID
+            self.name = name
+            self.subName = subName
+            self.image = image
+        }
+
+    }
+    
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     
     @IBAction func cancelTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -18,29 +35,10 @@ class ChooseBreedViewController: UIViewController, UITableViewDelegate, UITableV
     
     @IBOutlet weak var breedView: UIView!
     
-    var allBreeds = ["Affenpinscher (Pinczer małpi)",
-                     "Aidi (Owczarek z Gór Atlas)",
-                     "Airedale terrier",
-                     "Akbash dog",
-                     "Akita",
-                     "Akita amerykańska (Duży japoński pies)",
-                     "Alano español",
-                     "Alaskan husky",
-                     "Alaskan klee kai",
-                     "Alaskan malamute",
-                     "Alpejski gończy krótkonożny (Alpine Dachsbracke)",
-                     "American eskimo dog (Amerykański pies eskimoski)",
-                     "Amerykański pitbulterier",
-                     "Amerykański spaniel dowodny",
-                     "Amerykański staffordshire terier",
-                     "Anatolian",
-                     "Angielski Coonhound",
-                     "Appenzeller",
-                     "Ariégeois",
-                     "Australian Cattle Dog",
-                     "Australian stumpy tail cattle dog",
-                     "Australijski silky terier",
-                     
+    var allBreeds = [Breed]()
+    var searchedBreeds = [Breed]()
+
+    var allBreeds2 = [
                      "Barbet",
                      "Basenji",
                      "Basset",
@@ -85,33 +83,78 @@ class ChooseBreedViewController: UIViewController, UITableViewDelegate, UITableV
                      "Bulterier miniaturowy"]
     
     
+    func sampleData(){
+        allBreeds.append(Breed(name: "Affenpinscher", subName: "Pinczer małpi", image: UIImage()))
+        allBreeds.append(Breed(name: "Aidi", subName: "Owczarek z Gór Atlas", image: UIImage()))
+        allBreeds.append(Breed(name: "Airedale terrier", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Akbash dog", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Akita", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Akita amerykańska", subName: "Duży japoński pies", image: UIImage()))
+        allBreeds.append(Breed(name: "Alano español", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Alaskan husky", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Alaskan klee kai", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Alaskan malamute", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Alpejski gończy krótkonożny", subName: "Alpine Dachsbracke", image: UIImage()))
+        allBreeds.append(Breed(name: "Amerykański pies eskimoski", subName: "American eskimo dog", image: UIImage()))
+        allBreeds.append(Breed(name: "Amerykański pitbulterier", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Amerykański spaniel dowodny", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Amerykański staffordshire terier", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Alaskan malamute", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Anatolian", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Angielski Coonhound", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Appenzeller", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Ariégeois", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Australian Cattle Dog", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Australian stumpy tail cattle dog", subName: "", image: UIImage()))
+        allBreeds.append(Breed(name: "Australijski silky terier", subName: "", image: UIImage()))
+    }
+    
+    let URL_GET_BREEDS_STR = "https://serwer1878270.home.pl/WebService/api/getallbreeds.php"
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // establish connection for passing link and fire the main function
+        connectToJson(link: URL_GET_BREEDS_STR, jsonTitle: "breeds", mainFunctionName: mainChooseBreedFunction)
+
+        //sampleData()
         tableView.delegate = self
         tableView.dataSource = self
 
         breedView.layer.cornerRadius = 10
         breedView.layer.masksToBounds = true
-        // Do any additional setup after loading the view.
+        
+        searchBar.delegate = self
+
+    
+    }
+    
+    func mainChooseBreedFunction (passedJsonArray: [[String: Any]]) {
+        // return to main array for this controller results from choped json into single objects in array
+        self.allBreeds = JsonBreedToArray(inputJsonArray: passedJsonArray, downloadThumbnail: true)
+        
+        searchedBreeds = allBreeds
+
+        self.tableView.reloadData()
+        
+        DispatchQueue.main.async{
+            self.tableView.reloadData()
+        }
+        
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        Shared.shared.breedChoice = allBreeds[indexPath.row]
+        Shared.shared.breedChoice = searchedBreeds[indexPath.row].name!
         dismiss(animated: true, completion: nil)
-//        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let newViewController = storyBoard.instantiateViewController(withIdentifier: "MapViewController") as! MapViewController
-//        self.present(newViewController, animated: true, completion: nil)
-//
     }
 
  
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 100
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allBreeds.count
+        return searchedBreeds.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -120,11 +163,28 @@ class ChooseBreedViewController: UIViewController, UITableViewDelegate, UITableV
         cell.breedView.layer.cornerRadius = cell.breedView.frame.height / 2
         cell.breedImage.layer.cornerRadius = cell.breedImage.frame.height / 2
         
-        let breedObject = allBreeds[indexPath.row]
-        cell.breedNameLabel.text = "\(breedObject)"
-        //cell.cellImage.image = breedObject.ImageData
+        let breedObject = searchedBreeds[indexPath.row]
+        cell.breedNameLabel.text = "\(breedObject.name ?? "")"
+        cell.breedSubname.text = "\(breedObject.subName ?? "")"
+        cell.breedImage.image = breedObject.image
         
         return cell
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        guard !searchText.isEmpty else
+        {
+            searchedBreeds = allBreeds
+            tableView.reloadData()
+            return
+        }
+        
+        searchedBreeds = allBreeds.filter({ breed -> Bool in
+            (breed.name?.lowercased().contains(searchText.lowercased() ))! ||
+                (breed.subName?.lowercased().contains(searchText.lowercased() ))!
+
+        })
+        tableView.reloadData()
     }
     
 
