@@ -76,7 +76,7 @@ class AddTicketViewController: UIViewController, UITableViewDataSource, UITableV
         
         let petObject = petsArray![indexPath.row]
         
-        cell.cellTitle.text = "\(petObject.Color!) \(petObject.Breed!)" + " (" +  "\(petObject.Name!)" + ")"
+        cell.cellTitle.text = "\(petObject.Color!) \(petObject.Breed ?? "")" + " (" +  "\(petObject.Name!)" + ")"
         cell.cellSubtitle.text = "\(petObject.Street!), \(petObject.City!)"
         cell.cellImage.image = petObject.ImageData
         

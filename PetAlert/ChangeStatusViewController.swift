@@ -90,6 +90,7 @@ class ChangeStatusViewController: UIViewController, CLLocationManagerDelegate, G
         let longitude = finalLongitude
         let latitude = finalLatitude
         let status = selectedStatus
+        let userID = UserDefaults.standard.value(forKey: "logged_user_ID")
         // cannot update userID cos I will not display owner's ticket, but we need to show tickets that new user is participating. need to be done in seperate table?
         //let userID = "\(loggedUserID ?? "0")"
         
@@ -102,6 +103,8 @@ class ChangeStatusViewController: UIViewController, CLLocationManagerDelegate, G
         postParameters+="&status="+status
         postParameters+="&uuid="+sentPetToChange.UUID!
         postParameters+="&dateTimeModification="+String(dateTimeModificationString)
+        postParameters+="&userid="+"\(userID ?? "")"
+
         //adding the parameters to request body
         request.httpBody = postParameters.data(using: String.Encoding.utf8)
         print ("newLastSeenDateString: ", newLastSeenDateString)

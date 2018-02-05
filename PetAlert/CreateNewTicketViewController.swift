@@ -260,6 +260,9 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
 
 //        var addedPet:Pet = Pet(ID: 0, Name: nameInput.text, Breed: breedInput.text, Color: colorInput.text, City: city, Street: street, PetType: "1", Description: "", LastDate: lastSeenDateInput.text, Longitude: finalLongitude, Latitude: finalLatitude, Status: selectedStatus, Image: imageNameStr, ImageData: UIImage(), UserID: loggedUserID as? Int, UUID: UUID().uuidString, DateTimeModification: NSDate())
         
+        //body to test post:
+    //uuid=333&lastDate=2018-02-04+15%3A20%3A55&street=ulica&description=nic&longitude=50.123&breed=2&color=czarny&latitude=19.234&name=test&petType=1&city=Krak&status=1&userID=2&dateTimeModification=2018-02-04+15%3A20%3A58&image=1
+
         
         //created NSURL
         let requestURL = NSURL(string: URL_SAVE_PET)
@@ -326,7 +329,7 @@ class CreateNewTicketViewController: UIViewController, UIImagePickerControllerDe
         //adding the parameters to request body
         request.httpBody = postParameters.data(using: String.Encoding.utf8)
         
-        
+        print(postParameters)
         //creating a task to send the post request
         let task = URLSession.shared.dataTask(with: request as URLRequest){
             data, response, error in

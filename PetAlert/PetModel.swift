@@ -27,7 +27,8 @@ class Pet : NSObject{
     var UserID:         Int?
     var UUID:           String?
     var DateTimeModification:  NSDate?
-    
+    var StatusLoc:         Int? // 1 = aktualny, 0 = historyczny
+
     override init(){
         
     }
@@ -49,7 +50,8 @@ class Pet : NSObject{
         ImageData: UIImage?,
         UserID: Int?,
         UUID: String?,
-        DateTimeModification: NSDate?) {
+        DateTimeModification: NSDate?,
+        StatusLoc: Int) {
         self.ID = ID
         self.Name = Name
         self.Breed = Breed
@@ -67,6 +69,7 @@ class Pet : NSObject{
         self.UserID = UserID
         self.UUID = UUID
         self.DateTimeModification = DateTimeModification
+        self.StatusLoc = StatusLoc
     }
 }
 
@@ -131,7 +134,8 @@ func JsonToArray (inputJsonArray : [[String: Any]], downloadThumbnail: Bool) -> 
         if let userID = pet["UserID"] as? Int               {  petObject.UserID = userID  }
         if let uuid = pet["UUID"] as? String                {  petObject.UUID = uuid  }
         if let dateTimeModification = pet["DateTimeModification"] as? String {  petObject.DateTimeModification = dateFormatter.date(from:dateTimeModification)! as NSDate }
-        
+        if let statusLoc = pet["StatusLoc"] as? Int               {  petObject.StatusLoc = statusLoc  }
+
         if (petObject.Status == "1"){
             petObject.Status = "Searching"
         }

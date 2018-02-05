@@ -16,10 +16,10 @@ class DataService {
     private let dogTempList =
     [
         Pet(ID: 1, Name: "mateusz", Breed: "mateusz", Color: "mateusz", City: "mateusz", Street: "mateusz", PetType: "mateusz", Description: "mateusz", LastDate: "mateusz", Longitude: 5.0, Latitude: 2.0, Status: "mateusz", Image: "1_kundel", ImageData: UIImage(named: "1_kundel")
-, UserID: 1, UUID: "mateusz", DateTimeModification: NSDate()),
+            , UserID: 1, UUID: "mateusz", DateTimeModification: NSDate(), StatusLoc: 1),
         
         Pet(ID: 1, Name: "Iksra", Breed: "mateusz", Color: "mateusz", City: "mateusz", Street: "mateusz", PetType: "mateusz", Description: "mateusz", LastDate: "mateusz", Longitude: 5.0, Latitude: 2.0, Status: "mateusz", Image: "3_wilczur", ImageData: UIImage(named: "1_kundel")
-            , UserID: 1, UUID: "mateusz", DateTimeModification: NSDate())
+            , UserID: 1, UUID: "mateusz", DateTimeModification: NSDate(), StatusLoc: 1)
     ]
     
     
