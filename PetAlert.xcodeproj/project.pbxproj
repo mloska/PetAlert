@@ -21,6 +21,7 @@
 		494A239C200227AF00967826 /* MainTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A239B200227AF00967826 /* MainTabController.swift */; };
 		494A23A0200231B300967826 /* AddTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A239F200231B300967826 /* AddTicketViewController.swift */; };
 		494A23A22002320800967826 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494A23A12002320800967826 /* ProfileViewController.swift */; };
+		495DF788202A27D9007A6F15 /* HistoryMapTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 495DF787202A27D9007A6F15 /* HistoryMapTicketViewController.swift */; };
 		4973B3122020D507008C2787 /* CustomMarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4973B3112020D507008C2787 /* CustomMarkerView.swift */; };
 		4973B3142020D56F008C2787 /* CustomMarkerPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4973B3132020D56F008C2787 /* CustomMarkerPreviewView.swift */; };
 		498304B920238EB100A62F09 /* PopoverFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 498304B820238EB100A62F09 /* PopoverFilterViewController.swift */; };
@@ -53,6 +54,7 @@
 		494A239B200227AF00967826 /* MainTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabController.swift; sourceTree = "<group>"; };
 		494A239F200231B300967826 /* AddTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTicketViewController.swift; sourceTree = "<group>"; };
 		494A23A12002320800967826 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		495DF787202A27D9007A6F15 /* HistoryMapTicketViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryMapTicketViewController.swift; sourceTree = "<group>"; };
 		4973B3112020D507008C2787 /* CustomMarkerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerView.swift; sourceTree = "<group>"; };
 		4973B3132020D56F008C2787 /* CustomMarkerPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMarkerPreviewView.swift; sourceTree = "<group>"; };
 		498304B820238EB100A62F09 /* PopoverFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverFilterViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				849DC51720168311009B4054 /* VIEW */,
 				494A23652001313B00967826 /* Info.plist */,
 				494A23622001313B00967826 /* Main.storyboard */,
+				495DF787202A27D9007A6F15 /* HistoryMapTicketViewController.swift */,
 				4923D76C202600EE0002C8E9 /* ChooseBreedViewController.swift */,
 				498304BA20239B9C00A62F09 /* Shared.swift */,
 				498304B820238EB100A62F09 /* PopoverFilterViewController.swift */,
@@ -320,6 +323,7 @@
 				4973B3122020D507008C2787 /* CustomMarkerView.swift in Sources */,
 				8446069F2011485300AED470 /* PhotosViewController.swift in Sources */,
 				4913E5B52003FA1900C34C8A /* CustomTableViewCell.swift in Sources */,
+				495DF788202A27D9007A6F15 /* HistoryMapTicketViewController.swift in Sources */,
 				4923D76F202603DE0002C8E9 /* CustomBreedTableViewCell.swift in Sources */,
 				494A239A200206F300967826 /* MapViewController.swift in Sources */,
 				494A23A22002320800967826 /* ProfileViewController.swift in Sources */,
