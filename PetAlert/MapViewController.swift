@@ -65,6 +65,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     var sourceForMainMapFunction: String = ""
     // don't fire viewWillAppear at first open
     var firstLoad: Bool = true
+    var bounds = GMSCoordinateBounds()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,8 +107,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     }
     
     func initGoogleMaps(lat: Double, long: Double) {
-        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 10.0)
-        self.mapView.camera = camera
         self.mapView.delegate = self
         self.mapView.isMyLocationEnabled = true
     }
@@ -114,12 +114,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         locationManager.delegate = nil
         locationManager.stopUpdatingLocation()
-        let location = locations.last
-        let lat = (location?.coordinate.latitude)!
-        let long = (location?.coordinate.longitude)!
-        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: long, zoom: 10.0)
-        
-        self.mapView?.animate(to: camera)
         
         showMarkers()
     }
@@ -142,28 +136,26 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
         
         if (sourceForMainMapFunction == "mainView"){
             
-            let camera = GMSCameraPosition.camera(withLatitude: (drawLat), longitude: (drawLong), zoom: 10.0)
-            
-            //cannot set map cause search bar is lost on storyboard
-            //let map = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-            
             showMarkers()
             
             self.mapView.settings.compassButton = true
             self.mapView.settings.myLocationButton = true
             self.mapView.settings.scrollGestures = true
             self.mapView.settings.zoomGestures = true
-            
-            self.mapView.camera = camera;
-            //self.mapView = map
         } else if (sourceForMainMapFunction == "afterSearchPlace"){
-            let camera = GMSCameraPosition.camera(withLatitude: drawLat, longitude: drawLong, zoom: 10.0)
+            
+
+//            let camera = GMSCameraPosition.camera(withLatitude: drawLat, longitude: drawLong, zoom: 16.0)
+//            self.mapView.camera = camera;
 
             showMarkers()
 
             drawMarker()
-            
-            self.mapView?.camera = camera
+            // dostosowanie zooma automatycznie do wyswietlanych markerów
+            //self.mapView.animate(with: GMSCameraUpdate.fit(bounds, with: UIEdgeInsetsMake(50.0 , 50.0 ,50.0 ,50.0)))
+
+            let coordinate = CLLocationCoordinate2D(latitude: drawLat, longitude: drawLong)
+            self.mapView.animate(toLocation: coordinate)
         }
     }
     
@@ -179,6 +171,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
     }
     
     func drawMarker(){
+        // to draw single marker for searched location
         let marker=GMSMarker()
         marker.position = CLLocationCoordinate2D(latitude: drawLat, longitude: drawLong)
         marker.title = "\(chosenPlace?.name ?? "")"
@@ -233,8 +226,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, GMSMapView
             marker.iconView=customMarker
             marker.position = CLLocationCoordinate2D(latitude: pet.Latitude, longitude: pet.Longitude)
             marker.map = self.mapView
+            // dostosowanie zooma automatycznie do wyswietlanych markerów
+            bounds = bounds.includingCoordinate(marker.position)
         }
         drawCircle(coordinate: (CLLocationCoordinate2D(latitude: drawLat, longitude: drawLong)), radius: Double(radiusFromSlider))
+        
+        // dostosowanie zooma automatycznie do wyswietlanych markerów
+        self.mapView.animate(with: GMSCameraUpdate.fit(bounds, with: UIEdgeInsetsMake(50.0 , 50.0 ,50.0 ,50.0)))
+
     }
     
     @objc func markerTapped(tag: Int) {

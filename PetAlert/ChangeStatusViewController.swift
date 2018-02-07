@@ -51,9 +51,11 @@ class ChangeStatusViewController: UIViewController, CLLocationManagerDelegate, G
         if (sentStatus == "spotted"){
             statusLbl.text = "Spotted on"
             selectedStatus = "2"
+            self.navigationItem.title = "Spotted";
         } else if (sentStatus == "found"){
             statusLbl.text = "Found on"
             selectedStatus = "3"
+            self.navigationItem.title = "Found";
         }
     }
 
