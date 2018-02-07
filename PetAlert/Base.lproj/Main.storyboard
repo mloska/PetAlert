@@ -800,6 +800,7 @@
                         <outlet property="nameLbl" destination="22Q-AY-xNz" id="I2u-q2-YZ4"/>
                         <segue destination="LSs-r7-GGi" kind="show" identifier="changeStatusTicketSegue" id="5LE-X9-fvO"/>
                         <segue destination="HVY-SJ-Cn4" kind="show" identifier="mapHistoryTicketSegue" id="UWF-s0-H5j"/>
+                        <segue destination="nYR-Xw-Hdg" kind="show" identifier="listHistoryTicketSegue" id="C6E-4Y-qjE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s8B-7c-0op" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -898,6 +899,63 @@
             </objects>
             <point key="canvasLocation" x="2713" y="421"/>
         </scene>
+        <!--History List Ticket View Controller-->
+        <scene sceneID="OKi-gY-RHh">
+            <objects>
+                <viewController storyboardIdentifier="HistoryListTicketViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="nYR-Xw-Hdg" customClass="HistoryListTicketViewController" customModule="PetAlert" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0on-sz-qe8">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="9Br-g8-XeF">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="HistoryCell" rowHeight="200" id="G9L-R1-Po3" customClass="HistoryTicketTableViewCell" customModule="PetAlert" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="200"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="G9L-R1-Po3" id="Q62-12-2t7">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GEt-6v-CKA">
+                                                    <rect key="frame" x="15" y="29" width="90" height="90"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1hZ-mf-3cE">
+                                                    <rect key="frame" x="129" y="0.0" width="231" height="189"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="descriptionLbl" destination="1hZ-mf-3cE" id="Kc9-kW-w9u"/>
+                                            <outlet property="imageHist" destination="GEt-6v-CKA" id="t15-q2-KeX"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="9Br-g8-XeF" firstAttribute="leading" secondItem="0on-sz-qe8" secondAttribute="leading" id="5AH-9F-Ocf"/>
+                            <constraint firstItem="9Br-g8-XeF" firstAttribute="bottom" secondItem="OPH-rx-616" secondAttribute="bottom" id="B4H-Be-l2m"/>
+                            <constraint firstAttribute="trailing" secondItem="9Br-g8-XeF" secondAttribute="trailing" id="NYh-90-2c4"/>
+                            <constraint firstItem="9Br-g8-XeF" firstAttribute="top" secondItem="OPH-rx-616" secondAttribute="top" id="vC0-0M-zIX"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="OPH-rx-616"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="9Br-g8-XeF" id="9eL-bA-cpo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bZo-SM-0Nu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3676" y="419.64017991004499"/>
+        </scene>
         <!--Profil-->
         <scene sceneID="Huq-LT-ttn">
             <objects>
@@ -987,7 +1045,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5LE-X9-fvO"/>
-        <segue reference="88x-jc-rHq"/>
+        <segue reference="wy1-kC-ljt"/>
         <segue reference="Q3K-va-j5w"/>
     </inferredMetricsTieBreakers>
 </document>

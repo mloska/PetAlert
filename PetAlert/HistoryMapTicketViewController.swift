@@ -110,12 +110,6 @@ class HistoryMapTicketViewController: UIViewController, CLLocationManagerDelegat
         return customMarkerPreviewView
     }
     
-    func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
-        guard let customMarkerView = marker.iconView as? CustomMarkerView else { return }
-        chosenMarkerID = customMarkerView.tag
-        markerTapped(tag: chosenMarkerID)
-    }
-    
     func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
         guard let customMarkerView = marker.iconView as? CustomMarkerView else { return }
         let img = customMarkerView.img!
@@ -128,9 +122,5 @@ class HistoryMapTicketViewController: UIViewController, CLLocationManagerDelegat
         return v
     }()
     
-    @objc func markerTapped(tag: Int) {
-        self.performSegue(withIdentifier: "showTicketDetailsFromMarker", sender: self)
-        
-    }
 
 }

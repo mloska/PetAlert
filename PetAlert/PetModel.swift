@@ -109,7 +109,7 @@ func connectToJson(link: String, jsonTitle: String = "pets", mainFunctionName: @
 }
 
 // chop Json array into single objects
-func JsonToArray (inputJsonArray : [[String: Any]], downloadThumbnail: Bool) -> [Pet]{
+func JsonToArray (inputJsonArray : [[String: Any]], downloadThumbnail: Bool, downloadWithImages: Bool = true) -> [Pet]{
     let URL_PHOTOS_MAIN_STR = "https://serwer1878270.home.pl/Images/User_"
     var petsArrayReturn:[Pet]? = []
     let dateFormatter = DateFormatter()
@@ -146,18 +146,21 @@ func JsonToArray (inputJsonArray : [[String: Any]], downloadThumbnail: Bool) -> 
             petObject.Status = "Found"
         }
         
-        var thumbnailString: String = ""
-        if (downloadThumbnail){
-            thumbnailString = "thumbnail_"
+        if (downloadWithImages){
+            var thumbnailString: String = ""
+            if (downloadThumbnail){
+                thumbnailString = "thumbnail_"
+            }
+            
+            let imgURL = "\(URL_PHOTOS_MAIN_STR)" + "\(petObject.UserID!)" + "/" + "\(thumbnailString)" + "\(petObject.UUID!)" + ".jpg"
+            
+            let url = URL(string:imgURL)
+            if let data = try? Data(contentsOf: url!)
+            {
+                petObject.ImageData = UIImage(data: data)
+            }
         }
         
-        let imgURL = "\(URL_PHOTOS_MAIN_STR)" + "\(petObject.UserID!)" + "/" + "\(thumbnailString)" + "\(petObject.UUID!)" + ".jpg"
-        
-        let url = URL(string:imgURL)
-        if let data = try? Data(contentsOf: url!)
-        {
-            petObject.ImageData = UIImage(data: data)
-        }
         
         petsArrayReturn?.append(petObject)
     }

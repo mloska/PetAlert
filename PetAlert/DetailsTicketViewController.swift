@@ -96,8 +96,9 @@ class DetailsTicketViewController: UIViewController {
         let found = UIBarButtonItem(title: "Found", style: .plain, target: self, action: #selector(foundTapped))
         let spotted = UIBarButtonItem(title: "Spotted", style: .plain, target: self, action: #selector(spottedTapped))
         let mapHistory = UIBarButtonItem(image: #imageLiteral(resourceName: "map_Pin"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(mapTapped))
+        let list = UIBarButtonItem(image: #imageLiteral(resourceName: "icon_list"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(listTapped))
 
-        self.navigationItem.rightBarButtonItems = [found, spotted, mapHistory]
+        self.navigationItem.rightBarButtonItems = [found, spotted, mapHistory, list]
 
     }
     
@@ -121,6 +122,12 @@ class DetailsTicketViewController: UIViewController {
         performSegue(withIdentifier: "mapHistoryTicketSegue", sender: self)
     }
     
+    @objc func listTapped(){
+        print ("listTapped")
+        buttonStatusTapped = "list"
+        performSegue(withIdentifier: "listHistoryTicketSegue", sender: self)
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ChangeStatusViewController {
@@ -130,6 +137,9 @@ class DetailsTicketViewController: UIViewController {
         if let destination = segue.destination as? HistoryMapTicketViewController {
             destination.sentPetToViewHistory = destPet
             destination.sentStatus = buttonStatusTapped
+        }
+        if let destination = segue.destination as? HistoryListTicketViewController {
+            destination.sentPetToViewHistory = destPet
         }
         
         
